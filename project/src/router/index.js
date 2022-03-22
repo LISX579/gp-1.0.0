@@ -13,22 +13,22 @@ export default new Router({
     {
       path: '/graduation',
       name: 'graduation',
-      component: require('../global/structure/index'),
+      component: require('../global/structure/index').default,
       children: [
         {
           path: 'overview',
           name: 'overview',
-          component: require('../view/overview')
+          component: require('../view/overview').default
         },
         {
           path: 'selfInfo',
           name: 'selfInfo',
-          component: require('../view/selfInfo')
+          component: require('../view/selfInfo').default
         },
         {
           path: 'chat',
           name: 'chat',
-          component: require('../view/chat')
+          component: require('../view/chat').default
         }
       ]
     }
