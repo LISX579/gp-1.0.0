@@ -45,8 +45,9 @@ export default {
               type: 'success',
               message: '注册成功，自动以该账户登录...'
             })
+            // this.$socket.connect()
             this.$router.push({name: 'graduation'})
-            sessionStorage.setItem('userLogin', this.formData)
+            localStorage.setItem('userLogin', this.formData)
           } else {
             this.$notify.error({
               title: '注册',
@@ -64,16 +65,28 @@ export default {
               type: 'success',
               message: '登录成功！'
             })
-          } else {
+            // this.$socket.connect()
+          } else if(res.loginCheck === 'fail') {
             this.loginError = true
             this.$notify.error({
               title: '登录',
-              message: '您的账户或者密码输入有误'
+              message: '您的账户或者密码输入有误！'
+            })
+          } else if(res.loginCheck === 'repeat') {
+            this.$notify.error({
+              title: '登录',
+              message: '您输入的账户已经登录！'
             })
           }
         })
-        sessionStorage.setItem('userLogin', JSON.stringify(this.formData))
+        localStorage.setItem('userLogin', JSON.stringify(this.formData))
       }
+    }
+  },
+  mounted() {
+    console.log('session:' + JSON.parse(localStorage.getItem('userLogin')))
+    if(JSON.parse(localStorage.getItem('userLogin'))) {
+      this.$router.push({name: 'graduation'})
     }
   }
 }

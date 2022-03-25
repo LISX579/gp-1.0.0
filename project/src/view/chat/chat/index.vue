@@ -1,48 +1,32 @@
 <template>
   <div>
     <el-input type="text" placeholder="请输入消息" v-model="msg"></el-input>
-    <el-button @click="handleEnter">发消息</el-button>
+    <el-button @click="btnClick">发消息</el-button>
   </div>
 </template>
 
 <script>
 
-const ws = new WebSocket('ws://localhost:8081')
-
 export default {
-  data () {
+  computed: {
+  },
+  data() {
     return {
-      msg: '',
-      username: '',
-      msgList: []
+      msg: 'aaa'
     }
   },
   methods: {
-    handleEnter () {
-      const msg = this.msg
-      if (!msg.trim().length) {
-        return
-      }
-
-    },
-    handleSendBtn (e) {
-      console.log('FE:WebSocket open', e)
-    },
-    handleWsClose (e) {
-      console.log('FE:WebSocket close', e)
-    },
-    handleWsError(e) {
-      console.log('FE:WebSocket error', e)
-    },
-    handleWsMessage(e) {
-      console.log('FE:WebSocket message', e)
+    btnClick() {
+      navigator.sendBeacon('http://127.0.0.1:9000/exit/'+ '1001' , {'a':'112233'})
+      // this.$socket.emit('sub', '前端消息')
+    }
+  },
+  sockets: {
+    sub(data) {
+      console.log(data);
     }
   },
   mounted() {
-    ws.addEventListener('open', this.handleSendBtn.bind(this), false)
-    ws.addEventListener('close', this.handleWsClose.bind(this), false)
-    ws.addEventListener('error', this.handleWsError.bind(this), false)
-    ws.addEventListener('message', this.handleWsMessage.bind(this), false)
   }
 }
 </script>

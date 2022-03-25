@@ -11,5 +11,8 @@ export default {
   },
   'register': function (data) {
     return fetch(_thisApi + '/register', 'post', {}, data)
+  },
+  'exit': function (id) {
+    return fetch(_thisApi+ '/exit/'+ id, 'get')
   }
 }

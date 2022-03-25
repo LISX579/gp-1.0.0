@@ -1,7 +1,7 @@
 <template>
   <div class="content-wrap">
     <div class="title">个人信息</div>
-    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+    <el-tabs v-model="activeName" type="card" >
       <el-tab-pane
         label="基本信息"
         name="baseInfo"
@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       activeName: 'baseInfo',
-      userId: JSON.parse(sessionStorage.getItem('userLogin')).id,
+      userId: JSON.parse(localStorage.getItem('userLogin')).id,
       loading: true
     }
   },

@@ -4,7 +4,7 @@
       title="基本信息"
       :column="2"
     >
-      <el-descriptions-item label="学号">{{data.id}}</el-descriptions-item>
+      <el-descriptions-item label="学号">{{data.id || '-'}}</el-descriptions-item>
       <el-descriptions-item label="姓名">{{data.name ||'-'}}</el-descriptions-item>
       <el-descriptions-item label="曾用名">{{data.usedName||'-'}}</el-descriptions-item>
       <el-descriptions-item label="性别">{{data.sex||'-'}}</el-descriptions-item>
@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      data: null,
+      data: {},
       loading: true
     }
   },
