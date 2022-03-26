@@ -23,7 +23,6 @@ router.get('/login', async (ctx) => {
   }
 })
 router.get('/register', async (ctx) => {
-  console.log(ctx.query);
   const res = await getRes(sql.register(ctx.query.id, ctx.query.username, ctx.query.password))
   if (res.data) {
     await getRes(sql.createIdTable(ctx.query.id))
@@ -42,7 +41,6 @@ router.get('/register', async (ctx) => {
 })
 
 router.get('/:id/exit', async (ctx) => {
-  console.log(ctx.params.id);
   await getRes(sql.changeStatus(ctx.params.id, 'offline'))
   ctx.body = {
     message: '退出登录成功！'
@@ -52,7 +50,6 @@ router.get('/:id/exit', async (ctx) => {
 
 router.get('/:id/baseInfo', async (ctx) => {
   const res = await getRes(sql.baseInfo(ctx.params.id))
-  console.log(sql.baseInfo(ctx.params.id));
   await delay(1000, ()=> {
     if (res.data) {
       ctx.body = res
@@ -66,7 +63,6 @@ router.get('/:id/baseInfo', async (ctx) => {
 
 router.get('/:id/studInfo', async (ctx) => {
   const res = await getRes(sql.stuInfo(ctx.params.id))
-  console.log(sql.stuInfo(ctx.params.id));
   await delay(2000, () => {
     if (res.data) {
       ctx.body = res || 'null'
@@ -78,7 +74,6 @@ router.get('/:id/studInfo', async (ctx) => {
   })
 })
 router.get('/:id/contact', async (ctx) => {
-  console.log(ctx.params);
   const res = await getRes(sql.chat.getContact(ctx.params.id))
   ctx.body = res
   console.log(res);
