@@ -4,9 +4,9 @@ const _thisApi = api
 
 export default {
     'getBaseInfo': function (id) {
-        return fetch(_thisApi + '/baseInfo/'+ id, 'get')
+        return fetch(_thisApi + '/' + id + '/baseInfo', 'get')
     },
     'getStuInfo': function (id) {
-      return fetch(_thisApi + '/studInfo/' + id, 'get')
+      return fetch(_thisApi + '/' + id + '/studInfo', 'get')
     }
 }

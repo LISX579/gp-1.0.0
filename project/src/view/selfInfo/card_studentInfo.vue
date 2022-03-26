@@ -51,7 +51,6 @@ export default {
   mounted() {
     fetch.getStuInfo(this.userId).then(res => {
       this.data = res.data[0]
-      console.log(this.data)
       this.$emit('close-loading')
     })
   }

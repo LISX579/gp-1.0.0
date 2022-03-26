@@ -4,9 +4,15 @@
       <el-tab-pane label="通讯" name="chat" style="height: 100%">
         <div class="container">
           <div class="left">
-            <chat></chat>
+            <contact
+              :id="id"
+            ></contact>
           </div>
-          <div class="center">bbb</div>
+          <div class="center">
+            <chat
+              :id="id"
+            ></chat>
+          </div>
           <div class="right">ccc</div>
         </div>
       </el-tab-pane>
@@ -15,56 +21,68 @@
 </template>
 
 <script>
-import chat from './chat/index'
+import chat from './chat/index';
+import contact from './contacts/index';
+
 export default {
   components: {
-    chat
+    chat,
+    contact
   },
   data() {
     return {
-      activeName: 'chat'
-    }
+      activeName: 'chat',
+      id: JSON.parse(localStorage.getItem('userLogin')).id
+    };
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event)
+      // console.log(tab, event);
     }
   }
-}
+};
 </script>
 
 <style scoped>
 .current-content-wrap {
   height: 100%;
 }
-.container{
+
+.container {
   display: flex;
   height: 100%;
 }
-.left{
+
+.left {
   flex-basis: 25%;
   height: 100%;
   background-color: pink;
 }
-.center{
+
+.center {
   flex-grow: 1;
   height: 100%;
   background-color: powderblue;
 }
-.right{
+
+.right {
   flex-basis: 25%;
   height: 100%;
   background-color: pink;
 }
+
 >>> .el-tabs {
   height: 100%;
 }
+
 >>> .el-tabs--top {
   height: 100%;
 }
->>> .el-tabs__content{
+
+>>> .el-tabs__content {
   height: 94%;
 }
+
 >>> .el-tab-pane {
   height: 100%;
 }

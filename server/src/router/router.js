@@ -23,24 +23,26 @@ router.get('/login', async (ctx) => {
   }
 })
 router.get('/register', async (ctx) => {
-  const res = await getRes(sql.register(ctx.query.id,ctx.query.username, ctx.query.password))
-  await delay(2000, () => {
-    if (res.data) {
+  console.log(ctx.query);
+  const res = await getRes(sql.register(ctx.query.id, ctx.query.username, ctx.query.password))
+  if (res.data) {
+    await getRes(sql.createIdTable(ctx.query.id))
+    await getRes(sql.createBaseInfo(ctx.query.id))
+    await getRes(sql.createStuInfo(ctx.query.id))
+    await delay(2000, () => {
       ctx.body = {
         registerCheck: 'success',
       }
-    } else {
-      ctx.body = {
-        registerCheck: 'fail'
-      }
+    })
+  } else {
+    ctx.body = {
+      registerCheck: 'fail',
     }
-  })
-})
-router.get('/repeat', async (ctx) => {
-  
+  }
 })
 
-router.post('/exit/:id', async (ctx) => {
+router.get('/:id/exit', async (ctx) => {
+  console.log(ctx.params.id);
   await getRes(sql.changeStatus(ctx.params.id, 'offline'))
   ctx.body = {
     message: '退出登录成功！'
@@ -48,8 +50,9 @@ router.post('/exit/:id', async (ctx) => {
 })
 
 
-router.get('/baseInfo/:id', async (ctx) => {
+router.get('/:id/baseInfo', async (ctx) => {
   const res = await getRes(sql.baseInfo(ctx.params.id))
+  console.log(sql.baseInfo(ctx.params.id));
   await delay(1000, ()=> {
     if (res.data) {
       ctx.body = res
@@ -61,17 +64,24 @@ router.get('/baseInfo/:id', async (ctx) => {
   })
 })
 
-router.get('/studInfo/:id', async (ctx) => {
+router.get('/:id/studInfo', async (ctx) => {
   const res = await getRes(sql.stuInfo(ctx.params.id))
+  console.log(sql.stuInfo(ctx.params.id));
   await delay(2000, () => {
     if (res.data) {
-      ctx.body = res
+      ctx.body = res || 'null'
     } else {
       ctx.body = {
         message: '未找到该用户'
       }
     }
   })
+})
+router.get('/:id/contact', async (ctx) => {
+  console.log(ctx.params);
+  const res = await getRes(sql.chat.getContact(ctx.params.id))
+  ctx.body = res
+  console.log(res);
 })
 
 module.exports = router

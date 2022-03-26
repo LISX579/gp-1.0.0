@@ -10,9 +10,9 @@ export default {
     return fetch(_thisApi + '/login', 'get', {}, data)
   },
   'register': function (data) {
-    return fetch(_thisApi + '/register', 'post', {}, data)
+    return fetch(_thisApi + '/register', 'get', {}, data)
   },
   'exit': function (id) {
-    return fetch(_thisApi+ '/exit/'+ id, 'get')
+    return fetch(_thisApi+ '/'+id +'/exit/', 'get',{},{})
   }
 }

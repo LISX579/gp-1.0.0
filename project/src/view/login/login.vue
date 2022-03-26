@@ -47,7 +47,7 @@ export default {
             })
             // this.$socket.connect()
             this.$router.push({name: 'graduation'})
-            localStorage.setItem('userLogin', this.formData)
+            localStorage.setItem('userLogin', JSON.stringify(this.formData))
           } else {
             this.$notify.error({
               title: '注册',
@@ -59,7 +59,7 @@ export default {
         this.loading = false
         fetch.login(this.formData).then(res => {
           if (res.loginCheck === 'success') {
-            this.$router.push({name: 'graduation'})
+            this.$router.push({name: 'overview'})
             this.$notify({
               title: '登录',
               type: 'success',

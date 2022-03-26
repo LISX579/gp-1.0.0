@@ -30,3 +30,7 @@
   text-align: right;
   margin-top: 40px;
 }
+.chat-wrap {
+  margin: 10px 10px 10px 10px;
+  height: calc(100% - 20px);
+}

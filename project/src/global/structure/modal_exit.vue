@@ -6,8 +6,8 @@
       show-icon
     ><span slot="title">您确定要退出该系统吗？</span></el-alert>
     <div class="footer">
-        <el-button @click="close">取 消</el-button>
-        <el-button type="primary" @click="confirm">确 定</el-button>
+        <el-button @click="close">取消</el-button>
+        <el-button type="primary" @click="confirm">确定</el-button>
       </div>
   </div>
 </template>
@@ -27,9 +27,8 @@ export default {
       this.$emit('close')
     },
     confirm () {
-      console.log(this.userId);
       fetch.exit(this.userId).then(res => {
-        sessionStorage.removeItem('userLogin')
+        localStorage.removeItem('userLogin')
         this.$router.push('/')
       })
     }
