@@ -31,6 +31,8 @@
   margin-top: 40px;
 }
 .chat-wrap {
-  margin: 10px 10px 10px 10px;
+  /*margin: 10px 10px 10px 10px;*/
   height: calc(100% - 20px);
+  display: block;
+  overflow-y: auto;
 }

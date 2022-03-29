@@ -46,7 +46,6 @@ export default {
   mounted() {
     fetch.getBaseInfo(this.userId).then(res => {
       this.username = res.data[0].username
-      console.log(res);
     });
   },
   methods: {

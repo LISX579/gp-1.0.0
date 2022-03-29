@@ -1,11 +1,21 @@
 <template>
-  <div class="chat-wrap">
-    <el-tree :data="data"></el-tree>
+  <div class="current-content-wrap">
+    <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick" style="height: 100%">
+      <el-tab-pane label="好友" name="single" style="height: 100%">
+        <single
+          :id="id"
+        >
+        </single>
+      </el-tab-pane>
+      <el-tab-pane label="群聊" name="group" style="height: 100%">
+
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
 <script>
-import fetch from '@/fetch/chat'
+import single from './single'
 export default {
   props: {
     id: {
@@ -13,20 +23,25 @@ export default {
       default: ''
     }
   },
-  data() {
+  components: {
+    single
+  },
+  data () {
     return {
-      data: null
+      activeName: 'single',
     }
   },
-  mounted() {
-    console.log('contact');
-    fetch.getContact(this.id).then(res => {
-      console.log(res);
-    })
+  methods: {
+    handleClick (val) {
+      console.log(val);
+    },
   }
-}
+
+};
 </script>
 
 <style scoped>
-
+>>> .el-tabs__content {
+  padding: 0;
+}
 </style>

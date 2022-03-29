@@ -5,7 +5,7 @@ export const rootapi = 'http://127.0.0.1:9000'
 export function FETCH (url, method, data, params, header) {
   return new Promise((resolve, reject) => {
     axios({
-      methods: method || 'get',
+      method: method || 'get',
       url: url,
       params: params || {},
       data: data || {},

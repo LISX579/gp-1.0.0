@@ -1,6 +1,9 @@
 import {api, fetch} from './common'
+import axios from "axios";
 
 const _thisApi = api
+
+const data = { id: '1001'}
 
 export default {
   // 'userCheck': function () {
@@ -13,6 +16,6 @@ export default {
     return fetch(_thisApi + '/register', 'get', {}, data)
   },
   'exit': function (id) {
-    return fetch(_thisApi+ '/'+id +'/exit/', 'get',{},{})
+    return fetch(_thisApi +'/exit/'+ id, 'post')
   }
 }

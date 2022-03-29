@@ -9,24 +9,35 @@
 
 export default {
   mounted() {
-    window.onbeforeunload = function(){
-      var n = window.event.screenX - window.screenLeft;
-      var b = n > document.documentElement.scrollWidth-20;
-      if(b && window.event.clientY < 0 || window.event.altKey)
-      {
-        const data = JSON.parse(localStorage.getItem('userLogin')).id
-        navigator.sendBeacon('http://127.0.0.1:9000/exit/' + data)
-        localStorage.removeItem('userLogin')
+    let data = null;
+    // window.onload = function () {
+    //   // data = JSON.parse(localStorage.getItem('userLogin'));
+    //   // navigator.sendBeacon('http://127.0.0.1:9000/exit/' + data.id);
+    //   // localStorage.removeItem('userLogin');
+    // };
+    let beginTime = 0; //开始时间
+    let differTime = 0; //时间差
+    window.onunload = function () {
+      differTime = new Date().getTime() - beginTime;
+      if (differTime <= 5) {
+        navigator.sendBeacon('http://127.0.0.1:9000/exit/' + JSON.parse(localStorage.getItem('userLogin')).id)
+        localStorage.removeItem('userLogin');
       }
-    }
+    };
+
+    window.onbeforeunload = function () {
+      beginTime = new Date().getTime();
+    };
+
+
   }
-}
+};
 </script>
 
 <style>
- #app {
-   height: 99%;
-   width: 100%;
-   position: absolute;
- }
+#app {
+  height: 99%;
+  width: 100%;
+  position: absolute;
+}
 </style>

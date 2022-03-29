@@ -51,7 +51,7 @@ export default {
           } else {
             this.$notify.error({
               title: '注册',
-              message: '您输入的账户已被注册'
+              message: '您输入的账户已被注册!'
             })
           }
         })
@@ -84,7 +84,6 @@ export default {
     }
   },
   mounted() {
-    console.log('session:' + JSON.parse(localStorage.getItem('userLogin')))
     if(JSON.parse(localStorage.getItem('userLogin'))) {
       this.$router.push({name: 'graduation'})
     }

@@ -6,11 +6,13 @@
           <div class="left">
             <contact
               :id="id"
+              @selectId="selectId"
             ></contact>
           </div>
           <div class="center">
             <chat
               :id="id"
+              :selectedID-="selectedId"
             ></chat>
           </div>
           <div class="right">ccc</div>
@@ -32,14 +34,19 @@ export default {
   data() {
     return {
       activeName: 'chat',
-      id: JSON.parse(localStorage.getItem('userLogin')).id
+      id: JSON.parse(localStorage.getItem('userLogin')).id,
+      selectedId: ''
     };
   },
   methods: {
     handleClick(tab, event) {
       // console.log(tab, event);
+    },
+    selectId (id) {
+      this.selectedId = id
     }
-  }
+  },
+
 };
 </script>
 
