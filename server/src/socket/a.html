@@ -1,0 +1,32 @@
+<html>
+
+<head>
+  <meta charset='UTF-8'>
+  <title>socket.io客户端</title>
+  <script src='http://localhost:9001/socket.io/socket.io.js'></script>
+</head>
+
+<body>
+  <button id='send'>发送消息到服务器</button>
+  <div>
+    <h3>服务器响应的消息：</h3>
+    <i id='msg'></i>
+  </div>
+
+  <script>
+    var socket = io('ws://localhost:9001');
+    var send = document.querySelector('#send');
+    var msg = document.querySelector('#msg');
+
+    socket.on('getMsg', data => {
+      console.log('服务端消息：', data);
+      msg.innerHTML = `${data} <br/>`;
+    })
+
+    send.addEventListener('click',()=> {
+      console.log('asdsa');
+      socket.emit('send', 'hello')
+    })
+    </script>
+    </body>
+</html >

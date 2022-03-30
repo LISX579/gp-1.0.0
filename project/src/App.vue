@@ -9,12 +9,6 @@
 
 export default {
   mounted() {
-    let data = null;
-    // window.onload = function () {
-    //   // data = JSON.parse(localStorage.getItem('userLogin'));
-    //   // navigator.sendBeacon('http://127.0.0.1:9000/exit/' + data.id);
-    //   // localStorage.removeItem('userLogin');
-    // };
     let beginTime = 0; //开始时间
     let differTime = 0; //时间差
     window.onunload = function () {

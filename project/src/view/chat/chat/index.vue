@@ -55,12 +55,11 @@ export default {
     }
   },
   sockets: {
-    sub(data) {
+    send(data) {
       console.log(data);
     }
   },
   mounted() {
-    console.log('开始监听');
     this.$bus.$on('selectedID', id => {
       this.toID = id
     })
