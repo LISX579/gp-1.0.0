@@ -28,7 +28,6 @@ export default {
     }
   },
   mounted() {
-    console.log('asdasd',this.id);
     fetch.getContact(this.id).then(res => {
       const label = new Set(res.data.map(item => item.fclass))
       let _data = []
@@ -45,7 +44,6 @@ export default {
           }
         }
       })
-      console.log(_data);
       if (_data.length) {
         this.data = _data
       } else {
@@ -63,7 +61,7 @@ export default {
           <span>{data.label}</span>
         )
       }else return (
-        <cardOfpeople data={data}></cardOfpeople>
+        <cardOfpeople data={data} type="contact"></cardOfpeople>
       )
     }
   }

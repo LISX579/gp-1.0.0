@@ -9,6 +9,12 @@
         <el-form-item v-if="register" label="姓名" required>
           <el-input v-model="formData.username"></el-input>
         </el-form-item>
+        <el-form-item v-if="register" label="性别" required>
+          <el-radio-group style="text-align: left" v-model="formData.sex" size="medium">
+            <el-radio label="男"></el-radio>
+            <el-radio label="女"></el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="密码" required>
           <el-input v-model="formData.password" show-password></el-input>
         </el-form-item>
@@ -98,5 +104,4 @@ export default {
   width: 302px;
   padding: 32px 40px 28px 40px;
 }
-
 </style>

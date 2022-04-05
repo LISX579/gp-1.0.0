@@ -15,7 +15,7 @@
               :selectedID-="selectedId"
             ></chat>
           </div>
-          <div class="right">ccc</div>
+          <div class="right"><mesList></mesList></div>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -25,11 +25,13 @@
 <script>
 import chat from './chat/index';
 import contact from './contacts/index';
+import mesList from './mesList'
 
 export default {
   components: {
     chat,
-    contact
+    contact,
+    mesList
   },
   data() {
     return {

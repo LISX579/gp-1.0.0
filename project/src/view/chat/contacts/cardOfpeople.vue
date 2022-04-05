@@ -1,8 +1,17 @@
 <template>
-  <div class="cardPeo" @click="cardClick">
-    <el-avatar size="large" class="headImg"></el-avatar>
-    &emsp;{{data.username}}({{data.id}})<br>
-    &emsp;[{{data.status === 'offline' ? '离线': '在线'}}]&nbsp;aabbc
+  <div>
+    <div class="cardPeo" @click="cardClick" v-if="type==='contact'">
+      <el-avatar size="large" class="headImg"></el-avatar>
+      &emsp;{{data.username}}({{data.id}})<br>
+      &emsp;[{{data.status === 'offline' ? '离线': '在线'}}]&nbsp;{{data.text}}
+    </div>
+    <div v-if="type==='megList'" class="cardPeo">
+      <div @click="cardClick">
+        <el-avatar size="large" class="headImg"></el-avatar>
+        &emsp;{{data.username}}({{data.id}})<br>
+        &emsp;[{{data.status === 'offline' ? '离线': '在线'}}]&nbsp;{{data.text}}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -12,10 +21,14 @@ export default {
    data: {
      type: Object,
      default: ''
+   },
+   type: {
+     type: String,
+     default: ''
    }
  },
   mounted() {
-    console.log(this.data);
+    console.log(this.type);
   },
   methods: {
     cardClick () {

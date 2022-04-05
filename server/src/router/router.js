@@ -1,7 +1,9 @@
 const Router = require('koa-router')
 const router = new Router()
-const { getRes, delay } = require('../util/routerUtil')
+const { getRes, delay } = require('../util/sqlUtil')
 const sql = require('../mysql/sql')
+// const img = require('../assets/boy.png')
+
 
 router.get('/login', async (ctx) => {
   const res = await getRes(sql.login(ctx.query.id, ctx.query.password))
@@ -11,14 +13,13 @@ router.get('/login', async (ctx) => {
   }
 })
 router.get('/register', async (ctx) => {
-  const res = await getRes(sql.register(ctx.query.id,ctx.query.username, ctx.query.password))
+  const res = await getRes(sql.register(ctx.query.id, ctx.query.username, ctx.query.password, ctx.query.sex))
   
   await getRes(sql.insertBaseInfo(ctx.query.id))
   await getRes(sql.insertStuInfo(ctx.query.id))
   await getRes(sql.createyid(ctx.query.id))
   await getRes(sql.createzid(ctx.query.id))
   await getRes(sql.changeStatus(ctx.query.id))
-
   await getRes(sql.insertzid(ctx.query.id))
 
   await delay(2000, () => {

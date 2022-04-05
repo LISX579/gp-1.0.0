@@ -1,8 +1,12 @@
 <template>
   <div class="chat-wrap">
     <div v-if="toID" style="height: 100%">
-      <div class="chatHistory">
-        {{this.toID || 'asdsa'}}
+      <div class="chatHistory" ref="chatHis">
+        <div v-for="item in msgArr">
+          <card_msg
+            :item="item"
+          ></card_msg>
+        </div>
       </div>
       <el-input
         class="textarea"
@@ -23,8 +27,12 @@
 </template>
 
 <script>
-import fetch from "@/fetch/chat";
+import card_msg from "@/view/chat/chat/card_msg";
+import fetch from '@/fetch/chat'
 export default {
+  components: {
+    card_msg
+  },
   props: {
     id: {
       type: String,
@@ -35,8 +43,9 @@ export default {
   },
   data() {
     return {
+      toID: null,
       msg: '',
-      toID: null
+      msgArr: []
     }
   },
   methods: {
@@ -45,11 +54,10 @@ export default {
         id: this.id,
         toID: this.toID,
         content: this.msg,
-        time: new Date()
+        time: new Date(new Date())
       }
-      fetch.sendMsg(postData).then(res => {
-        console.log(res);
-      })
+      this.$socket.emit('sendMsg', postData)
+      this.msg = ''
     },
     close() {
     }
@@ -57,28 +65,51 @@ export default {
   sockets: {
     send(data) {
       console.log(data);
+    },
+    sendMsg(data) {
+      console.log(data);
+    },
+    getMsg(data) {
+      this.msgArr = data.data
     }
   },
   mounted() {
     this.$bus.$on('selectedID', id => {
       this.toID = id
+      const  data = {
+        id: this.id,
+        toID: this.toID
+      }
+      fetch.getMsg(data).then(res => {
+        this.msgArr = res.data
+        console.log(res.data);
+      })
     })
-
+  },
+  watch: {
+    'msgArr': function () {
+      this.$nextTick(() => {
+        this.$refs['chatHis'].scrollTop = parseInt(this.$refs['chatHis'].scrollHeight)
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
 .chatHistory {
-  height: 80%;
+  height: 70%;
   background-color: #B3C0D1;
   margin: 10px 10px 10px 10px;
+  padding: 20px 20px 20px 20px;
+  overflow: auto;
 }
 .footer {
   text-align: right;
   margin-top: 10px;
 }
 .textarea {
-  margin-top: 10px;
+  margin: 10px 10px 10px 10px;
+  width: calc(100% - 20px);
 }
 </style>

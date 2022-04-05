@@ -1,7 +1,8 @@
+const { formatDateTime} = require('../util/sqlUtil')
 const sql = {
   // 登录注册
   'login': (username, password) => `select * from user where id='${username}' and password='${password}' and status='offline'`,
-  'register': (id, username, password) => `insert into user (id,username,password,status,text) values (${id},'${username}', '${password}', 'online', '没有个签就是最好的个签')`,
+  'register': (id, username, password, sex, img) => `insert into user (id,username,password,status,text,sex) values (${id},'${username}', '${password}', 'online', '没有个签就是最好的个签','${sex}','${img}')`,
   
   'changeStatus': (id) => `update user set status='online' where id=${id}`,
 
@@ -10,6 +11,7 @@ const sql = {
   'createyid': (id) => `CREATE TABLE \`yid${id}\` (\`id\`  int NOT NULL ,\`toID\`  int NULL, content varchar(255), time datetime,PRIMARY KEY (\`id\`))`,
   'createzid': (id) => `CREATE TABLE \`zid${id}\` (\`id\`  int NOT NULL ,\`fclass\`  varchar(255) NULL DEFAULT '我的好友' ,PRIMARY KEY (\`id\`))`,
   'insertzid': (id) => `insert into zid${id} (id) values ('${id}')`,
+  
 
 
   'exit': (id) => `update user set status='offline' where id=${id}`,
@@ -19,7 +21,10 @@ const sql = {
   'stuInfo': (id) => `select * from stuInfo where id='${id}'`,
   
   'chat': {
-    'contact': (id) => `SELECT \`user\`.id,\`user\`.\`status\`,\`user\`.text,zid1001.fclass from user,zid1001 WHERE \`user\`.id=zid1001.id`
+    'contact': (id) => `SELECT \`user\`.id,\`user\`.\`status\`,\`user\`.username,\`user\`.text,zid1001.fclass from user,zid1001 WHERE \`user\`.id=zid1001.id`,
+    'insertyid': (data) => `insert into yid${data.id} (id, toID, content, time) values ('${data.id}','${data.toID}','${data.content}','${formatDateTime(data.time)}')`,
+    'getyid': (data) => `select * from yid${data.id} where toID = ${data.toID}`,
+    'getAllyid': (id) => `SELECT \`user\`.username, yid${id}.* from \`user\` LEFT JOIN yid${id} on \`user\`.id=yid${id}.toID`
   }
 }
 
