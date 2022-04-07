@@ -22,9 +22,10 @@ const sql = {
   
   'chat': {
     'contact': (id) => `SELECT \`user\`.id,\`user\`.\`status\`,\`user\`.username,\`user\`.text,zid1001.fclass from user,zid1001 WHERE \`user\`.id=zid1001.id`,
-    'insertyid': (data) => `insert into yid${data.id} (id, toID, content, time) values ('${data.id}','${data.toID}','${data.content}','${formatDateTime(data.time)}')`,
+    'insertyid': (data) => `insert into yid${data.id} (id, toID, content, time, status) values ('${data.id}','${data.toID}','${data.content}','${formatDateTime(data.time)}', 'true')`,
     'getyid': (data) => `select * from yid${data.id} where toID = ${data.toID}`,
-    'getAllyid': (id) => `SELECT \`user\`.username, yid${id}.* from \`user\` LEFT JOIN yid${id} on \`user\`.id=yid${id}.toID`
+    'getAllyid': (id) => `SELECT \`user\`.username, yid${id}.* from \`user\` LEFT JOIN yid${id} on \`user\`.id=yid${id}.toID where \`user\`.id=yid${id}.toID`,
+    'contact_move': data => `update zid${data.id} set fclass='${data.fclass}' where id='${data.toID}'`,
   }
 }
 

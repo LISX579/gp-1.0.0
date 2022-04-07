@@ -2,15 +2,18 @@
   <div class="chat-wrap">
     <el-tree :data="data" :render-content="renderContent" >
     </el-tree>
+    <control-bar></control-bar>
   </div>
 </template>
 
 <script>
 import fetch from '@/fetch/chat'
 import cardOfpeople from '@/view/chat/contacts/cardOfpeople'
+import controlBar from "@/view/chat/contacts/controlBar";
 export default {
   components: {
-    cardOfpeople
+    cardOfpeople,
+    controlBar
   },
   props: {
     id: {
@@ -28,30 +31,9 @@ export default {
     }
   },
   mounted() {
-    fetch.getContact(this.id).then(res => {
-      const label = new Set(res.data.map(item => item.fclass))
-      let _data = []
-      label.forEach(item => {
-        _data.push({
-          label: item,
-          children: []
-        })
-      })
-      res.data.forEach(item => {
-        for (let i = 0; i< _data.length; i++) {
-          if (_data[i].label === item.fclass) {
-            _data[i].children.push(item)
-          }
-        }
-      })
-      if (_data.length) {
-        this.data = _data
-      } else {
-        this.data = [{
-          label: '我的好友',
-          children: []
-        }]
-      }
+    this.getData()
+    this.$bus.$on('contact_move', ()=> {
+      this.getData()
     })
   },
   methods: {
@@ -63,6 +45,33 @@ export default {
       }else return (
         <cardOfpeople data={data} type="contact"></cardOfpeople>
       )
+    },
+    getData() {
+      fetch.getContact(this.id).then(res => {
+        const label = new Set(res.data.map(item => item.fclass))
+        let _data = []
+        label.forEach(item => {
+          _data.push({
+            label: item,
+            children: []
+          })
+        })
+        res.data.forEach(item => {
+          for (let i = 0; i< _data.length; i++) {
+            if (_data[i].label === item.fclass) {
+              _data[i].children.push(item)
+            }
+          }
+        })
+        if (_data.length) {
+          this.data = _data
+        } else {
+          this.data = [{
+            label: '我的好友',
+            children: []
+          }]
+        }
+      })
     }
   }
 }

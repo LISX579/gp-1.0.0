@@ -22,6 +22,11 @@ router.get('/:id/getAllMsg', async (ctx) => {
   ctx.body = res
 })
 
+router.post('/contact_move', async (ctx) => {
+  const res = await getRes(sql.chat.contact_move(ctx.query))
+  console.log(sql.chat.contact_move(ctx.query));
+  ctx.body = res
+})
 
 
 

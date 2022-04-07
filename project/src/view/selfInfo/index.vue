@@ -1,6 +1,6 @@
 <template>
   <div class="content-wrap">
-    <div class="title">个人信息</div>
+    <div class="title">{{title || ''}}个人信息</div>
     <el-tabs v-model="activeName" type="card" >
       <el-tab-pane
         label="基本信息"
@@ -30,6 +30,16 @@
 import studentInfo from "@/view/selfInfo/card_studentInfo";
 import baseInfo from "@/view/selfInfo/card_baseInfo";
 export default {
+  props: {
+    userId: {
+      type: String,
+      default: (JSON.parse(localStorage.getItem('userLogin')).id).toString()
+    },
+    title: {
+      type: String,
+      default: ''
+    }
+  },
   components: {
     studentInfo,
     baseInfo
@@ -37,7 +47,6 @@ export default {
   data() {
     return {
       activeName: 'baseInfo',
-      userId: JSON.parse(localStorage.getItem('userLogin')).id,
       loading: true
     }
   },
