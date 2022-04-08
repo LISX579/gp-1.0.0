@@ -16,6 +16,9 @@ export default {
     return fetch(_thisApi +'/'+ id + '/getAllMsg', 'get')
   },
   'contact_move': function (data) {
-    return fetch(_thisApi + '/contact_move','post',{},data)
+    return fetch(_thisApi + '/contact_move','post',{}, data)
+  },
+  'contact_remove': function (data) {
+    return fetch(_thisApi + '/contact_remove', 'post', {}, data)
   }
 }

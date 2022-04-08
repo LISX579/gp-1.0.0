@@ -82,7 +82,6 @@ export default {
       }
       fetch.getMsg(data).then(res => {
         this.msgArr = res.data
-        console.log(res.data);
       })
     })
   },

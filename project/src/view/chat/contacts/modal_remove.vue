@@ -10,17 +10,22 @@
     </el-alert>
     <div class="footer">
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="confirm">确定</el-button>
+      <el-button type="primary" @click="confirm" v-loading="loading">确定</el-button>
     </div>
   </div>
 </template>
 
 <script>
 
-
+import fetch from "@/fetch/chat";
 export default {
+  data() {
+    return {
+      loading: false
+    }
+  },
   props: {
-    userId: {
+    toID: {
       type: String,
       default: ''
     }
@@ -30,7 +35,11 @@ export default {
       this.$emit('close')
     },
     confirm () {
-
+      this.loading = true
+      const postData = {
+        id: JSON.parse(localStorage.getItem('userLogin')).id,
+        toID: this.toID
+      }
     }
   },
   mounted() {

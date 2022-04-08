@@ -27,6 +27,11 @@ router.post('/contact_move', async (ctx) => {
   console.log(sql.chat.contact_move(ctx.query));
   ctx.body = res
 })
+router.post('/contact_remove', async (ctx) => {
+  const res = await getRes(sql.chat.contact_remove(ctx.query))
+  this.$socket.emit()
+  ctx.body = res
+})
 
 
 

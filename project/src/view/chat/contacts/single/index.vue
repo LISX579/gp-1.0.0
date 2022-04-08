@@ -39,8 +39,15 @@ export default {
   methods: {
     renderContent (h, { node, data, store }) {
       if (node.level == 1) {
+        let count = 0
+        data.children.forEach(item => {
+          if (item.status === 'online') count++
+        })
         return (
-          <span>{data.label}</span>
+          <div>
+            {data.label}
+            <span style="right: 10px; position: absolute;">{count}/{data.children.length}</span>
+          </div>
         )
       }else return (
         <cardOfpeople data={data} type="contact"></cardOfpeople>
@@ -72,6 +79,7 @@ export default {
           }]
         }
       })
+      console.log(this.data);
     }
   }
 }
@@ -84,6 +92,8 @@ export default {
 >>> .el-tree-node__content {
   height: 60px;
   padding-left:0px;
+}
+.count {
 
 }
 </style>

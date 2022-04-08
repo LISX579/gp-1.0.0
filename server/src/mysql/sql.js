@@ -26,6 +26,7 @@ const sql = {
     'getyid': (data) => `select * from yid${data.id} where toID = ${data.toID}`,
     'getAllyid': (id) => `SELECT \`user\`.username, yid${id}.* from \`user\` LEFT JOIN yid${id} on \`user\`.id=yid${id}.toID where \`user\`.id=yid${id}.toID`,
     'contact_move': data => `update zid${data.id} set fclass='${data.fclass}' where id='${data.toID}'`,
+    'contact_remove': data => `delete from yid${data.id} where toID='${data.toID}'`,
   }
 }
 

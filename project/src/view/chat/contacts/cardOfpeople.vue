@@ -51,7 +51,7 @@
     >
       <component
         :is="modalName"
-        :toID="data.id.toString"
+        :toID="this.type === 'contact' ? this.data.id : this.data.toID"
         @close="modalClose"
       ></component>
     </el-dialog>
@@ -61,7 +61,7 @@
       show-close
       size="80%"
       :with-header="false">
-      <drawerInfo :user-id="data.id.toString()" :title="data.username"></drawerInfo>
+      <drawerInfo :user-id="this.type === 'contact' ? this.data.id.toString() : this.data.toID.toString()" :title="data.username"></drawerInfo>
     </el-drawer>
 
   </div>
@@ -69,14 +69,12 @@
 
 <script>
 import modalDelete from "@/view/chat/contacts/modal_delete";
-import modalInfo from "@/view/chat/contacts/modal_info";
 import modalMove from "@/view/chat/contacts/modal_move";
 import drawerInfo from "@/view/selfInfo";
 import modalRemove from "@/view/chat/contacts/modal_remove";
 export default {
   components: {
     modalDelete,
-    modalInfo,
     modalMove,
     drawerInfo,
     modalRemove

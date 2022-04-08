@@ -4,7 +4,7 @@
       type="warning"
       :closable="false"
       show-icon
-    ><span slot="title">您确定要</span></el-alert>
+    ><span slot="title">您确定要删除该好友吗？</span></el-alert>
     <div class="footer">
       <el-button @click="close">取消</el-button>
       <el-button type="primary" @click="confirm">确定</el-button>

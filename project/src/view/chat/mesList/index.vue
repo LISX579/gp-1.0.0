@@ -19,22 +19,26 @@ export default {
       toIdMsgArr: []
     };
   },
-  methods: {},
+  methods: {
+    getList() {
+      const id = JSON.parse(localStorage.getItem('userLogin')).id;
+      fetch.getAllMsg(id).then(res => {
+        res.data.forEach(item => {
+          const flag = this.toIdMsgArr.find(it => it.toID === item.toID)
+          if (!flag) this.toIdMsgArr.push(item)
+          else {
+            let index = -1
+            this.toIdMsgArr.forEach((it,ind) => {
+              index = ind
+            })
+            this.toIdMsgArr[index] = item
+          }
+        })
+      });
+    }
+  },
   mounted() {
-    const id = JSON.parse(localStorage.getItem('userLogin')).id;
-    fetch.getAllMsg(id).then(res => {
-      res.data.forEach(item => {
-        const flag = this.toIdMsgArr.find(it => it.toID === item.toID)
-        if (!flag) this.toIdMsgArr.push(item)
-        else {
-          let index = -1
-          this.toIdMsgArr.forEach((it,ind) => {
-            index = ind
-          })
-          this.toIdMsgArr[index] = item
-        }
-      })
-    });
+    this.getList()
   }
 };
 </script>
