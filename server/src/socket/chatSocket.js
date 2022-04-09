@@ -30,7 +30,16 @@ function chatSocket() {
       socket.emit('msgListInc', emitData)
     })
     socket.on('applyAdd', async (data) => {
-      socket.emit('applyAddBack', data)
+      console.log(data);
+      const res = await getRes(sql.chat.addAppyFriend(data))
+      socket.emit('applyAddBack', 'asdsadas')
+    })
+    socket.on('applyAgree', async (data) => {
+      console.log(data);
+      await getRes(sql.chat.agreeAddFriend1(data))
+      await getRes(sql.chat.agreeAddFriend2(data))
+      const idArr = [data.myID,data.fromID]
+      socket.emit('applyAgreeBack', idArr)
     })
   })
 

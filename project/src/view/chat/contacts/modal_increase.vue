@@ -10,6 +10,15 @@
           <div v-for="item in finData" :class="selectedCard===item ? 'selectedClass': ''">
             <cardOfpeople :data="item" :type="'findCard'" @selectCard="selectCard"></cardOfpeople>
           </div>
+          <el-input
+            v-if="selectedCard"
+            type="textarea"
+            :autosize="{ minRows: 4, maxRows: 6}"
+            placeholder="请输入验证消息..."
+            v-model="form.checkInfo"
+            style="margin-top: 10px"
+          >
+          </el-input>
         </div>
       </el-form>
     </div>
@@ -29,7 +38,9 @@ export default {
   },
   data () {
     return {
-      form: {},
+      form: {
+        checkInfo: ''
+      },
       finData:[],
       rules: {
         input: [
@@ -58,16 +69,21 @@ export default {
       })
     },
     confirm () {
+      let data = {
+        username: JSON.parse(localStorage.getItem('userLogin')).username,
+        img: JSON.parse(localStorage.getItem('userLogin')).img,
+        text: JSON.parse(localStorage.getItem('userLogin')).text,
+        checkInfo: this.form.checkInfo,
+        opType: 'addFriend',
+        fromID: JSON.parse(localStorage.getItem('userLogin')).id
+      }
       const postData = {
         id: JSON.parse(localStorage.getItem('userLogin')).id,
-        data: this.selectedCard
+        toID: this.selectedCard.id,
+        data: JSON.stringify(data),
       }
       this.$socket.emit('applyAdd', postData)
-    }
-  },
-  sockets: {
-    applyAddBack(data) {
-      console.log(data);
+      this.close()
     }
   },
   mounted() {
@@ -86,6 +102,7 @@ export default {
   margin-right: 40px;
   margin-left: 25px;
   line-height: 27px;
+  margin-bottom: 10px;
 }
 .selectedClass {
   border-radius:10px;

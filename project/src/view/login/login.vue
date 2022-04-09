@@ -72,6 +72,10 @@ export default {
               message: '登录成功！'
             })
             // this.$socket.connect()
+            this.formData.text = res.data[0].text
+            this.formData.username = res.data[0].username
+            this.formData.img = res.data[0].img
+            localStorage.setItem('userLogin', JSON.stringify(this.formData))
           } else if(res.loginCheck === 'fail') {
             this.loginError = true
             this.$notify.error({
@@ -85,7 +89,6 @@ export default {
             })
           }
         })
-        localStorage.setItem('userLogin', JSON.stringify(this.formData))
       }
     }
   },

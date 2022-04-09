@@ -106,7 +106,7 @@ export default {
     },
     self() {
       let id = JSON.parse(localStorage.getItem('userLogin')).id
-      if (id = this.data.id) return true
+      if (id === this.data.id) return true
       else return false
     }
   },
@@ -129,6 +129,7 @@ export default {
    }
   },
   mounted() {
+    console.log(this.data);
   },
   methods: {
     findCardClick () {
@@ -208,7 +209,7 @@ export default {
   position: absolute;
 }
 >>> .el-tree-node__content {
-  cursor: auto;
+  cursor: default;
 }
 >>> .el-drawer__header{
   margin-bottom: -8px;

@@ -46,7 +46,6 @@ export default {
             this.toIdMsgArr[index] = item
           }
         })
-
       });
     }
   },

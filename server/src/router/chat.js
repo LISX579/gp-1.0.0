@@ -43,6 +43,12 @@ router.post('/deleteFriend', async (ctx) => {
   ctx.body = res
 })
 
+router.get('/:id/getApply', async (ctx) => {
+  const res = await getRes(sql.chat.getApply(ctx.params.id))
+  ctx.body = res
+  console.log(res);
+})
+
 
 
 

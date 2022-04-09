@@ -9,7 +9,8 @@ router.get('/login', async (ctx) => {
   const res = await getRes(sql.login(ctx.query.id, ctx.query.password))
   await getRes(sql.changeStatus(ctx.query.id))
   ctx.body = {
-    'loginCheck': res.data.length ? 'success' : 'fail'
+    'loginCheck': res.data.length ? 'success' : 'fail',
+    'data': res.data
   }
 })
 router.get('/register', async (ctx) => {

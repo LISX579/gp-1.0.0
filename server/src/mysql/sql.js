@@ -1,7 +1,7 @@
 const { formatDateTime} = require('../util/sqlUtil')
 const sql = {
   // 登录注册
-  'login': (username, password) => `select * from user where id='${username}' and password='${password}' and status='offline'`,
+  'login': (username, password) => `select username,img,text from user where id='${username}' and password='${password}' and status='offline'`,
   'register': (id, username, password, sex, img) => `insert into user (id,username,password,status,text,sex) values (${id},'${username}', '${password}', 'online', '没有个签就是最好的个签','${sex}','${img}')`,
   
   'changeStatus': (id) => `update user set status='online' where id=${id}`,
@@ -28,7 +28,11 @@ const sql = {
     'contact_move': data => `update zid${data.id} set fclass='${data.fclass}' where id='${data.toID}'`,
     'contact_remove': data => `delete from yid${data.id} where toID='${data.toID}'`,
     'find': data => `select user.id,user.username,user.status,user.text,user.img,user.sex from user where id='${data}' or username='${data}'`,
-    'deleteFriend': data => `delete from zid${data.id} where id='${data.toID}'`
+    'deleteFriend': data => `delete from zid${data.id} where id='${data.toID}'`,
+    'addAppyFriend': data => `insert into apply values ('${data.id}','${data.toID}','${data.data}')`,
+    'getApply': id => `select data from apply where toID='${id}'`,
+    'agreeAddFriend1': (data) => `insert into zid${data.myID} values ('${data.fromID}','我的好友')`,
+    'agreeAddFriend2': (data) => `insert into zid${data.fromID} values ('${data.myID}','我的好友')`
   }
 }
 

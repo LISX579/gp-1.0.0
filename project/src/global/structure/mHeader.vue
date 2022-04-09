@@ -3,7 +3,7 @@
     <el-dropdown trigger="click" @command="dropClick">
         <span class="el-dropdown-link">
           <i class="el-icon-setting" style="margin-right: 15px"></i>
-          <span>{{ username }}</span>
+          <span>{{ selfData.username }}({{ selfData.id }})</span>
         </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="modalHome">我的主页</el-dropdown-item>
@@ -20,7 +20,7 @@
     >
       <component
         :is="modalName"
-        :userId="userId"
+        :userId="selfData.id"
         @close="modalClose"
       ></component>
     </el-dialog>
@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import fetch from "@/fetch/selfInfo";
 import modalExit from "@/global/structure/modal_exit";
 export default {
   components: {
@@ -36,17 +35,14 @@ export default {
   },
   data() {
     return {
-      username: '',
-      userId: JSON.parse(localStorage.getItem('userLogin')).id,
+      selfData: JSON.parse(localStorage.getItem('userLogin')),
       modalTitle: '',
       modalName: '',
       dialogVisible: false
     };
   },
   mounted() {
-    fetch.getBaseInfo(this.userId).then(res => {
-      this.username = res.data[0].username
-    });
+    console.log(this.selfData);
   },
   methods: {
     dropClick(val) {

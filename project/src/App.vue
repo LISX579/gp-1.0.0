@@ -31,7 +31,7 @@ export default {
 <style>
 #app {
   height: 99%;
-  width: 100%;
+  width: 99%;
   position: absolute;
 }
 </style>

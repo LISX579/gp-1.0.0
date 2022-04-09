@@ -10,6 +10,14 @@ import fetch from '@/fetch/chat'
 import cardOfpeople from '@/view/chat/contacts/cardOfpeople'
 import controlBar from "@/view/chat/contacts/controlBar";
 export default {
+  sockets: {
+    applyAgreeBack(data) {
+      const id = JSON.parse(localStorage.getItem('userLogin')).id
+      if (data.indexOf(id)> -1) {
+        this.getData()
+      }
+    }
+  },
   components: {
     cardOfpeople,
   },
@@ -53,7 +61,6 @@ export default {
     },
     getData() {
       fetch.getContact(this.id).then(res => {
-        console.log('res', res);
         const label = new Set(res.data.map(item => item.fclass))
         let _data = []
         label.forEach(item => {

@@ -29,5 +29,8 @@ export default {
   },
   'deleteFriend': function (data) {
     return fetch(_thisApi + '/deleteFriend', 'post', {},data)
+  },
+  'getApply': function (id) {
+    return fetch(_thisApi +'/'+ id +'/getApply', 'get',)
   }
 }
