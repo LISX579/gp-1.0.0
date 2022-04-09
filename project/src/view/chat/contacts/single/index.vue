@@ -2,7 +2,6 @@
   <div class="chat-wrap">
     <el-tree :data="data" :render-content="renderContent" >
     </el-tree>
-    <control-bar></control-bar>
   </div>
 </template>
 
@@ -13,7 +12,6 @@ import controlBar from "@/view/chat/contacts/controlBar";
 export default {
   components: {
     cardOfpeople,
-    controlBar
   },
   props: {
     id: {
@@ -32,7 +30,7 @@ export default {
   },
   mounted() {
     this.getData()
-    this.$bus.$on('contact_move', ()=> {
+    this.$bus.$on('contact_refresh', ()=> {
       this.getData()
     })
   },
@@ -55,6 +53,7 @@ export default {
     },
     getData() {
       fetch.getContact(this.id).then(res => {
+        console.log('res', res);
         const label = new Set(res.data.map(item => item.fclass))
         let _data = []
         label.forEach(item => {
@@ -70,16 +69,8 @@ export default {
             }
           }
         })
-        if (_data.length) {
-          this.data = _data
-        } else {
-          this.data = [{
-            label: '我的好友',
-            children: []
-          }]
-        }
+        this.data=_data
       })
-      console.log(this.data);
     }
   }
 }

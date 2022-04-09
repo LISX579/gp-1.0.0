@@ -11,6 +11,17 @@ import fetch from '@/fetch/chat';
 import cardOfpeople from "@/view/chat/contacts/cardOfpeople";
 
 export default {
+  sockets: {
+    msgListInc(data) {
+      const a = this.toIdMsgArr.find(item => {
+        return item.toID == data.toID
+      })
+      if (!a) this.toIdMsgArr.push(data)
+    },
+    msgChange(data) {
+      this.getList()
+    }
+  },
   components: {
     cardOfpeople
   },
@@ -21,6 +32,7 @@ export default {
   },
   methods: {
     getList() {
+      this.toIdMsgArr=[]
       const id = JSON.parse(localStorage.getItem('userLogin')).id;
       fetch.getAllMsg(id).then(res => {
         res.data.forEach(item => {
@@ -34,11 +46,15 @@ export default {
             this.toIdMsgArr[index] = item
           }
         })
+
       });
     }
   },
   mounted() {
     this.getList()
+    this.$bus.$on('refreshList', ()=> {
+      this.getList()
+    })
   }
 };
 </script>

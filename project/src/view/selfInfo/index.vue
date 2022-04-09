@@ -8,7 +8,7 @@
         v-loading="loading"
       >
         <baseInfo
-          :userId="userId"
+          :userId="uid"
           @close-loading="closeLoading"
         ></baseInfo>
       </el-tab-pane>
@@ -18,7 +18,7 @@
         v-loading="loading"
       >
         <studentInfo
-          :userId="userId"
+          :userId="uid"
           @close-loading="closeLoading"
         ></studentInfo>
       </el-tab-pane>
@@ -33,11 +33,16 @@ export default {
   props: {
     userId: {
       type: String,
-      default: (JSON.parse(localStorage.getItem('userLogin')).id).toString()
+      default: ''
     },
     title: {
       type: String,
       default: ''
+    }
+  },
+  computed: {
+    uid() {
+      return this.userId ? this.userId : (JSON.parse(localStorage.getItem('userLogin')).id).toString()
     }
   },
   components: {
@@ -54,9 +59,7 @@ export default {
     closeLoading() {
       this.loading = false
     }
-    // handleClick() {
-    //   this.loading = true
-    // }
+
   },
   mounted() {
 

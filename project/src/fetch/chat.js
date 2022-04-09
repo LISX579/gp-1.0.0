@@ -20,5 +20,14 @@ export default {
   },
   'contact_remove': function (data) {
     return fetch(_thisApi + '/contact_remove', 'post', {}, data)
+  },
+  'find': function (data) {
+    return fetch(_thisApi + '/find', 'post', {}, data)
+  },
+  'addFriend': function (data) {
+    return fetch(_thisApi + '/addFriend', 'post',{},data)
+  },
+  'deleteFriend': function (data) {
+    return fetch(_thisApi + '/deleteFriend', 'post', {},data)
   }
 }

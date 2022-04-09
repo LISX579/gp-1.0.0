@@ -18,9 +18,19 @@ function chatSocket() {
     // })
     socket.on('sendMsg', async (data) => {
       await getRes(sql.chat.insertyid(data))
-      socket.emit('getMsg', '返回的消息')
       const res = await getRes(sql.chat.getyid(data))
       socket.emit('getMsg', res)
+      socket.emit('msgChange')
+    })
+    socket.on('msgListInc', async (data) => {
+      const emitData = {
+        toID: data.id,
+        username: data.username
+      }
+      socket.emit('msgListInc', emitData)
+    })
+    socket.on('applyAdd', async (data) => {
+      socket.emit('applyAddBack', data)
     })
   })
 

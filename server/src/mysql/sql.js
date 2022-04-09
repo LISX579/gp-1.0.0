@@ -21,12 +21,14 @@ const sql = {
   'stuInfo': (id) => `select * from stuInfo where id='${id}'`,
   
   'chat': {
-    'contact': (id) => `SELECT \`user\`.id,\`user\`.\`status\`,\`user\`.username,\`user\`.text,zid1001.fclass from user,zid1001 WHERE \`user\`.id=zid1001.id`,
+    'contact': (id) => `SELECT \`user\`.id,\`user\`.\`status\`,\`user\`.username,\`user\`.text,zid${id}.fclass from user,zid${id} WHERE \`user\`.id=zid${id}.id`,
     'insertyid': (data) => `insert into yid${data.id} (id, toID, content, time, status) values ('${data.id}','${data.toID}','${data.content}','${formatDateTime(data.time)}', 'true')`,
     'getyid': (data) => `select * from yid${data.id} where toID = ${data.toID}`,
     'getAllyid': (id) => `SELECT \`user\`.username, yid${id}.* from \`user\` LEFT JOIN yid${id} on \`user\`.id=yid${id}.toID where \`user\`.id=yid${id}.toID`,
     'contact_move': data => `update zid${data.id} set fclass='${data.fclass}' where id='${data.toID}'`,
     'contact_remove': data => `delete from yid${data.id} where toID='${data.toID}'`,
+    'find': data => `select user.id,user.username,user.status,user.text,user.img,user.sex from user where id='${data}' or username='${data}'`,
+    'deleteFriend': data => `delete from zid${data.id} where id='${data.toID}'`
   }
 }
 

@@ -40,6 +40,10 @@ export default {
         id: JSON.parse(localStorage.getItem('userLogin')).id,
         toID: this.toID
       }
+
+      fetch.contact_remove(postData).then(res => {
+        this.$bus.$emit('contact_refresh')
+      })
     }
   },
   mounted() {

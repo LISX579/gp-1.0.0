@@ -14,7 +14,7 @@
 
 <script>
 
-
+import fetch from "@/fetch/chat";
 export default {
   props: {
     toID: {
@@ -27,7 +27,14 @@ export default {
       this.$emit('close')
     },
     confirm () {
-
+      const postData = {
+        id: JSON.parse(localStorage.getItem('userLogin')).id,
+        toID: this.toID
+      }
+      fetch.deleteFriend(postData).then(res => {
+        this.$bus.$emit('contact_refresh')
+        this.close()
+      })
     }
   },
   mounted() {

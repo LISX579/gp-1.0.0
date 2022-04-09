@@ -8,11 +8,13 @@
 
       </el-tab-pane>
     </el-tabs>
+    <control-bar :id="id"></control-bar>
   </div>
 </template>
 
 <script>
 import single from './single'
+import controlBar from "@/view/chat/contacts/controlBar";
 export default {
   props: {
     id: {
@@ -21,7 +23,8 @@ export default {
     }
   },
   components: {
-    single
+    single,
+    controlBar
   },
   data () {
     return {
@@ -29,9 +32,9 @@ export default {
     }
   },
   methods: {
-    handleClick (val) {
-      console.log(val);
-    },
+    handleClick() {
+
+    }
   }
 
 };
