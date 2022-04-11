@@ -2,7 +2,7 @@
   <div>
     <div class="cardPeo" @click="contactClick" v-if="type==='contact'">
       <el-avatar size="large" class="headImg"></el-avatar>
-      &emsp;{{data.username}}({{data.id}})
+      &emsp;{{ data.username }}({{ data.id }})
       <div class="control">
         <el-dropdown trigger="click" placement="bottom-end" @command="dropClick">
           <el-button @click.stop type="text" style="margin-bottom: 5px">
@@ -17,33 +17,34 @@
         </el-dropdown>
       </div>
       <br>
-      &emsp;<div class="selfText">[{{data.status === 'offline' ? '离线': '在线'}}]&nbsp;{{data.text}}</div>
+      &emsp;<div class="selfText">[{{ data.status === 'offline' ? '离线' : '在线' }}]&nbsp;{{ data.text }}</div>
     </div>
     <div v-if="type==='msgList'" class="msgClass">
       <div @click="cardClick">
         <el-badge :value="count" class="item">
           <el-avatar size="large" class="headImg"/>
         </el-badge>
-        &emsp;{{data.username}}({{data.toID}})
+        &emsp;{{ data.username }}({{ data.toID }})
         <div class="control">
-        <el-dropdown trigger="click" placement="bottom-end" @command="dropClick">
-          <el-button @click.stop type="text" style="margin-bottom: 20px">
-            <i class="el-icon-more"></i>
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="modalRemove">从会话列表移除</el-dropdown-item>
-            <el-dropdown-item command="sendMsg">发送消息</el-dropdown-item>
-            <el-dropdown-item command="drawerInfo">查看资料</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div><br>
-        &emsp;<div class="selfText">{{data.content || ''}}</div>
+          <el-dropdown trigger="click" placement="bottom-end" @command="dropClick">
+            <el-button @click.stop type="text" style="margin-bottom: 20px">
+              <i class="el-icon-more"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="modalRemove">从会话列表移除</el-dropdown-item>
+              <el-dropdown-item command="sendMsg">发送消息</el-dropdown-item>
+              <el-dropdown-item command="drawerInfo">查看资料</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+        <br>
+        &emsp;<div class="selfText">{{ data.content || '' }}</div>
       </div>
     </div>
     <div v-if="type==='findCard'" class="findCard">
-      <div @click="findCardClick" >
+      <div @click="findCardClick">
         <el-avatar size="large" class="findCardImg"></el-avatar>
-        &emsp;{{data.username}}({{data.id}})
+        &emsp;{{ data.username }}({{ data.id }})
         <div class="control">
           <el-dropdown trigger="click" placement="bottom-end" @command="dropClick">
             <el-button @click.stop type="text" style="margin-bottom: 20px;margin-right: 60px">
@@ -53,8 +54,9 @@
               <el-dropdown-item command="drawerInfo">查看资料</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-        </div><br>
-        &emsp;<div class="selfText">{{data.text}}</div>
+        </div>
+        <br>
+        &emsp;<div class="selfText">{{ data.text }}</div>
       </div>
     </div>
 
@@ -88,11 +90,12 @@ import modalDelete from "@/view/chat/contacts/modal_delete";
 import modalMove from "@/view/chat/contacts/modal_move";
 import drawerInfo from "@/view/selfInfo";
 import modalRemove from "@/view/chat/contacts/modal_remove";
+
 export default {
 
   sockets: {
     badgeValue(res) {
-      this.count = res.data[0].count
+      if (this.data.id == res.toID) this.count = res.data[0].count;
     }
   },
   components: {
@@ -105,42 +108,42 @@ export default {
     targetoID() {
       switch (this.type) {
         case 'contact':
-          return this.data.id.toString()
+          return this.data.id.toString();
         case 'msgList':
-          return this.data.toID.toString()
+          return this.data.toID.toString();
         case 'findCard':
-          return this.data.id.toString()
+          return this.data.id.toString();
       }
     },
     self() {
-      let id = JSON.parse(localStorage.getItem('userLogin')).id
-      console.log(id,this.data);
-      if (id == this.data.id) return true
-      else return false
+      let id = JSON.parse(localStorage.getItem('userLogin')).id;
+      console.log(id, this.data);
+      if (id == this.data.id) return true;
+      else return false;
     }
   },
- props:{
-   data: {
-     type: Object,
-     default: ''
-   },
-   type: {
-     type: String,
-     default: ''
-   }
- },
-  data () {
-   return {
-     modalTitle: '',
-     modalName: '',
-     dialogVisible: false,
-     drawerVisible: false,
-     count: ''
-   }
+  props: {
+    data: {
+      type: Object,
+      default: ''
+    },
+    type: {
+      type: String,
+      default: ''
+    }
+  },
+  data() {
+    return {
+      modalTitle: '',
+      modalName: '',
+      dialogVisible: false,
+      drawerVisible: false,
+      count: ''
+    };
   },
   mounted() {
-    if (this.type=='msgList') {
-      this.getMsgListBadge()
+    if (this.type == 'msgList') {
+      this.getMsgListBadge();
     }
   },
   methods: {
@@ -148,37 +151,37 @@ export default {
       const data = {
         id: JSON.parse(localStorage.getItem('userLogin')).id,
         toID: this.data.id
-      }
-      this.$socket.emit('badgeValue', data)
+      };
+      this.$socket.emit('badgeValue', data);
     },
-    findCardClick () {
-      this.$emit('selectCard', this.data)
+    findCardClick() {
+      this.$emit('selectCard', this.data);
     },
-    contactClick () {
-      const id = this.targetoID
-      this.$bus.$emit('selectedID', id)
-      this.$socket.emit('msgListInc', this.data)
+    contactClick() {
+      const id = this.targetoID;
+      this.$bus.$emit('selectedID', id);
+      this.$socket.emit('msgListInc', this.data);
     },
-    cardClick () {
-      const id = this.targetoID
-      this.$bus.$emit('selectedID', id)
+    cardClick() {
+      const id = this.targetoID;
+      this.$bus.$emit('selectedID', id);
     },
     dropClick(val) {
       switch (val) {
         case 'modalMove':
-          this.modalTitle = '移动联系人分组'
+          this.modalTitle = '移动联系人分组';
           break;
         case 'sendMsg':
-          this.$bus.$emit('selectedID', this.type === 'contact' ? this.data.id : this.data.toID)
+          this.$bus.$emit('selectedID', this.type === 'contact' ? this.data.id : this.data.toID);
           break;
         case 'drawerInfo':
-          this.drawerVisible = true
+          this.drawerVisible = true;
           break;
         case 'modalDelete':
-          this.modalTitle = '删除好友'
+          this.modalTitle = '删除好友';
           break;
         case 'modalRemove':
-          this.modalTitle = '从会话列表删除'
+          this.modalTitle = '从会话列表删除';
           break;
       }
       if (['sendMsg', 'drawerInfo'].includes(val)) return;
@@ -198,22 +201,26 @@ export default {
   display: flex;
   float: left;
 }
+
 .findCardImg {
   display: flex;
   float: left;
   margin-top: 10px;
 }
+
 .cardPeo {
   padding-top: 10px;
   height: 100%;
   width: 100%;
   margin-left: -30px;
 }
+
 .msgClass {
   padding-top: 20px;
   margin-left: 40px;
   cursor: pointer;
 }
+
 .selfText {
 
   overflow: hidden;
@@ -222,18 +229,22 @@ export default {
   display: inline-block;
   max-width: 280px;
 }
+
 .control {
   display: inline-block;
   right: 10px;
   position: absolute;
 }
+
 >>> .el-tree-node__content {
   cursor: default;
 }
->>> .el-drawer__header{
+
+>>> .el-drawer__header {
   margin-bottom: -8px;
   padding: 10px 10px 0;
 }
+
 .findCard {
   padding-left: 10px;
   cursor: pointer;

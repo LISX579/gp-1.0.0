@@ -18,21 +18,20 @@ function chatSocket() {
 
     socket.on('sendMsg', async (data) => {
       await getRes(sql.chat.insertyid1(data))
-      if (data.id != data.toID) await getRes(sql.chat.insertyid2(data))
-      if (data.id === data.toID) return;
-
-      socket.to(data.toID.toString()).emit('getMsg', data)
-      socket.to(data.toID.toString()).emit('msgRefresh')
-      socket.emit('msgRefresh')
-      const res = await getRes(sql.chat.getBadge(data))
-      socket.to(data.toID.toString()).emit('badgeValue', res)
+      if (data.id !== data.toID){
+        await getRes(sql.chat.insertyid2(data))
+        socket.to(data.toID.toString()).emit('getMsg', data)
+        socket.to(data.toID.toString()).emit('msgRefresh')
+        socket.emit('msgRefresh')
+        const res = await getRes(sql.chat.getBadge(data))
+        socket.to(data.toID.toString()).emit('badgeValue', res)
+      }
     })
 
 
 
     socket.on('badgeValue', async (data) => {
       const res = await getRes(sql.chat.getBadge(data))
-      console.log(data.id, res);
       res.toID = data.toID
       socket.emit('badgeValue', res)
     })
