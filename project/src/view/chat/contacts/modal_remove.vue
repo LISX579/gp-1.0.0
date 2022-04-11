@@ -42,7 +42,8 @@ export default {
       }
 
       fetch.contact_remove(postData).then(res => {
-        this.$bus.$emit('contact_refresh')
+        this.$bus.$emit('refreshList')
+        this.close()
       })
     }
   },

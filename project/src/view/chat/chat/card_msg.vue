@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="wrap">
+    <div  v-if="align === 'right'" class="wrap">
       <el-avatar class="avaR" icon="el-icon-user-solid"></el-avatar>
       <span class="chatBox-right">
         {{item.content}}
       </span>
     </div>
-    <div class="wrap">
-      <el-avatar class="avaL" icon="el-icon-user-solid"></el-avatar>
+    <div v-if="align === 'left'" class="wrap">
+      <el-avatar  class="avaL" icon="el-icon-user-solid"></el-avatar>
       <div class="chatBox-left">
         {{item.content}}
       </div>
@@ -21,6 +21,10 @@ export default {
     item: {
       type: Object,
       default: null
+    },
+    align: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -44,6 +48,7 @@ export default {
   width: 100%;
   float: right;
   position: relative;
+  margin-bottom: 10px;
 }
 .chatBox-right {
   display: inline-block;
@@ -54,7 +59,7 @@ export default {
   min-width: 50px;
   max-width: 150px;
   min-height: 31px;
-  background: #f8ac09;
+  background: #f4f4f5;
   border-radius: 5px;
   margin: 5px 5px 5px 5px ;
   padding: 5px 5px 5px 5px;
@@ -68,7 +73,7 @@ export default {
   width: 8px;
   height: 8px;
   transform: rotate(45deg);
-  background-color: #f8ac09;
+  background-color: #f4f4f5;
 }
 
 .chatBox-left {
@@ -79,7 +84,7 @@ export default {
   min-width: 50px;
   max-width: 200px;
   min-height: 31px;
-  background: #f8ac09;
+  background: #faecd8;
   border-radius: 5px;
   margin: 5px 5px 5px 5px ;
   padding: 5px 5px 5px 5px;
@@ -93,6 +98,6 @@ export default {
   width: 8px;
   height: 8px;
   transform: rotate(45deg);
-  background-color: #f8ac09;
+  background-color:#faecd8;
 }
 </style>

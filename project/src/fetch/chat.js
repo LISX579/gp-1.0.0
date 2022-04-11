@@ -29,5 +29,8 @@ export default {
   },
   'deleteFriend': function (data) {
     return fetch(_thisApi + '/deleteFriend', 'post', {},data)
+  },
+  'getUserInfo': function (id) {
+    return fetch(_thisApi +'/'+ id + '/getUserInfo', 'get')
   }
 }

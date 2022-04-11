@@ -18,6 +18,13 @@ export default {
       var second = date.getSeconds();
       second = second < 10 ? ('0' + second) : second;
       return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+    },
+    'parseRes': function (res) {
+      let output = []
+      res.data.forEach(item => {
+        output.push(JSON.parse(item.data))
+      })
+      return output
     }
   }
 }
