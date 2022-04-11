@@ -11,11 +11,8 @@ import cardOfpeople from '@/view/chat/contacts/cardOfpeople'
 import controlBar from "@/view/chat/contacts/controlBar";
 export default {
   sockets: {
-    applyAgreeBack(data) {
-      const id = JSON.parse(localStorage.getItem('userLogin')).id
-      if (data.indexOf(id)> -1) {
-        this.getData()
-      }
+    contactRefresh() {
+      this.getData()
     }
   },
   components: {

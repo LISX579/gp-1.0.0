@@ -34,6 +34,7 @@
         @close="modalClose"
       ></component>
     </el-dialog>
+    <el-button @click="click">发送</el-button>
   </div>
 </template>
 
@@ -41,11 +42,16 @@
 
 import modalIncrease from "@/view/chat/contacts/modal_increase";
 import modalPending from "@/view/chat/contacts/modal_pending";
-import fetch from "@/fetch/chat";
+import util from "@/util/util";
 
 export default {
+  mixins: [util],
   sockets: {
-    applyAddBack(data) {
+    refreshApply(data) {
+      const _data = this.parseRes(data)
+      this.pendingData = _data
+    },
+    demoBack(data) {
       console.log(data);
     }
   },
@@ -65,9 +71,13 @@ export default {
       modalName: '',
       dialogVisible: false,
       pendingData: [],
+      myID: JSON.parse(localStorage.getItem('userLogin')).id
     }
   },
   methods: {
+    click() {
+      this.$socket.emit('applyAdd','1004')
+    },
     dropClick(val) {
       switch (val) {
         case 'modalIncrease':
@@ -89,11 +99,7 @@ export default {
     },
   },
   mounted() {
-    fetch.getApply(this.id).then(res=> {
-      res.data.forEach(item => {
-        this.pendingData.push(JSON.parse(item.data))
-      })
-    })
+    this.$socket.emit('getApply',this.id)
   }
 }
 </script>

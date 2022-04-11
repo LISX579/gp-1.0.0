@@ -21,7 +21,9 @@
     </div>
     <div v-if="type==='msgList'" class="msgClass">
       <div @click="cardClick">
-        <el-avatar size="large" class="headImg"></el-avatar>
+        <el-badge :value="count" class="item">
+          <el-avatar size="large" class="headImg"/>
+        </el-badge>
         &emsp;{{data.username}}({{data.toID}})
         <div class="control">
         <el-dropdown trigger="click" placement="bottom-end" @command="dropClick">
@@ -35,7 +37,7 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div><br>
-        &emsp;<div class="selfText">{{data.content}}</div>
+        &emsp;<div class="selfText">{{data.content || ''}}</div>
       </div>
     </div>
     <div v-if="type==='findCard'" class="findCard">
@@ -87,6 +89,12 @@ import modalMove from "@/view/chat/contacts/modal_move";
 import drawerInfo from "@/view/selfInfo";
 import modalRemove from "@/view/chat/contacts/modal_remove";
 export default {
+
+  sockets: {
+    badgeValue(res) {
+      this.count = res.data[0].count
+    }
+  },
   components: {
     modalDelete,
     modalMove,
@@ -106,7 +114,8 @@ export default {
     },
     self() {
       let id = JSON.parse(localStorage.getItem('userLogin')).id
-      if (id === this.data.id) return true
+      console.log(id,this.data);
+      if (id == this.data.id) return true
       else return false
     }
   },
@@ -125,13 +134,23 @@ export default {
      modalTitle: '',
      modalName: '',
      dialogVisible: false,
-     drawerVisible: false
+     drawerVisible: false,
+     count: ''
    }
   },
   mounted() {
-    console.log(this.data);
+    if (this.type=='msgList') {
+      this.getMsgListBadge()
+    }
   },
   methods: {
+    getMsgListBadge() {
+      const data = {
+        id: JSON.parse(localStorage.getItem('userLogin')).id,
+        toID: this.data.id
+      }
+      this.$socket.emit('badgeValue', data)
+    },
     findCardClick () {
       this.$emit('selectCard', this.data)
     },

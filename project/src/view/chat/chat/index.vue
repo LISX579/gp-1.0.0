@@ -2,9 +2,11 @@
   <div class="chat-wrap">
     <div v-if="toID" style="height: 100%">
       <div class="chatHistory" ref="chatHis">
+        <div class="title-bar">{{toData ? toData.username : ''}}({{toData ? toData.id :''}}) </div>
         <div v-for="item in msgArr">
           <card_msg
             :item="item"
+            :align="item.align"
           ></card_msg>
         </div>
       </div>
@@ -22,7 +24,7 @@
         <el-button @click="sendMessage">发送</el-button>
       </div>
     </div>
-    <div v-else style="height: 100%">暂未选择相应ID</div>
+    <div v-else style="height: 100%">暂未打开聊天界面相应ID</div>
   </div>
 </template>
 
@@ -44,8 +46,10 @@ export default {
   data() {
     return {
       toID: null,
+      toData: null,
       msg: '',
-      msgArr: []
+      msgArr: [],
+      myData: JSON.parse(localStorage.getItem('userLogin'))
     }
   },
   methods: {
@@ -58,37 +62,56 @@ export default {
       }
       this.$socket.emit('sendMsg', postData)
       this.msg = ''
+      postData.align = postData.id == this.myData.id ? 'right' : 'left'
+      this.msgArr.push(postData)
     },
     close() {
+      console.log('close');
     }
   },
   sockets: {
-    send(data) {
-      console.log(data);
-    },
-    sendMsg(data) {
-      console.log(data);
-    },
     getMsg(data) {
-      this.msgArr = data.data
+      data.align = 'left'
+      console.log(data);
+      if (data.id == this.toData.id) this.msgArr.push(data)
     }
   },
   mounted() {
+    this.$socket.emit('openChat', {
+      id: this.myData.id,
+      toID: this.id
+    })
+    this.msgArr=[]
     this.$bus.$on('selectedID', id => {
       this.toID = id
       const  data = {
         id: this.id,
         toID: this.toID
       }
+      fetch.getUserInfo(this.toID).then(res => {
+        this.toData = res.data[0]
+      })
+
       fetch.getMsg(data).then(res => {
-        this.msgArr = res.data
+        const data = res.data
+        data.sort((a, b)=> {
+          if (new Date(a.time)> new Date(b.time)) return 1
+          else if (new Date(a.time) < new Date(b.time)) return -1
+          else return 0
+        })
+        data.forEach(item => {
+          item.align = item.id == this.myData.id ? 'right': 'left'
+        })
+        this.msgArr = data
       })
     })
   },
   watch: {
     'msgArr': function () {
       this.$nextTick(() => {
-        this.$refs['chatHis'].scrollTop = parseInt(this.$refs['chatHis'].scrollHeight)
+        if (this.$refs['chatHis']){
+          this.$refs['chatHis'].scrollTop = parseInt(this.$refs['chatHis'].scrollHeight)
+        }
       })
     }
   }
@@ -111,4 +134,14 @@ export default {
   margin: 10px 10px 10px 10px;
   width: calc(100% - 20px);
 }
+.title-bar {
+  margin-bottom: 10px;
+  text-align: center;
+  height: 8%;
+  min-height: 50px;
+  font-size: 30px;
+  color: #4f81af;
+  overflow: hidden;
+  border-bottom: 1px solid #E4E7ED;
+ }
 </style>

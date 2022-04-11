@@ -76,8 +76,9 @@ export default {
       data.myID = JSON.parse(localStorage.getItem('userLogin')).id
       this.$socket.emit('applyAgree', data)
     },
-    refuse(){
-
+    refuse(data){
+      data.myID = JSON.parse(localStorage.getItem('userLogin')).id
+      this.$socket.emit('applyRefuse', data)
     },
     close () {
       this.$emit('close')

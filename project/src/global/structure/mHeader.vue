@@ -42,7 +42,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.selfData);
+    this.$socket.emit('connectID',this.selfData.id)
   },
   methods: {
     dropClick(val) {

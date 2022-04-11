@@ -4,23 +4,22 @@ const { getRes, delay } = require('../util/sqlUtil')
 const sql = require('../mysql/sql')
 
 router.get('/:id/contact', async (ctx) => {
-  console.log(sql.chat.contact(ctx.params.id));
   const res = await getRes(sql.chat.contact(ctx.params.id))
   ctx.body = res
 })
 
 router.get('/getMsg', async (ctx) => {
-  const res = await getRes(sql.chat.getyid(ctx.query))
-  console.log(res);
+  const res = await getRes(sql.chat.getyid(ctx.query.id, ctx.query.toID))
   if (res.data) {
     ctx.body = res
   } else {
-    ctx.body = '暂未选择好友'
+    ctx.body = ''
   }
 })
 router.get('/:id/getAllMsg', async (ctx) => {
-  const res = await getRes(sql.chat.getAllyid(ctx.params.id))
-  ctx.body = res
+  const res1= await getRes(sql.chat.getAllyid1(ctx.params.id))
+  const res2 = await getRes(sql.chat.getAllyid2(ctx.params.id))
+  ctx.body = {res1, res2}
 })
 
 router.post('/contact_move', async (ctx) => {
@@ -38,7 +37,6 @@ router.post('/find', async (ctx) => {
 })
 
 router.post('/deleteFriend', async (ctx) => {
-  console.log(sql.chat.deleteFriend(ctx.query));
   const res = await getRes(sql.chat.deleteFriend(ctx.query))
   ctx.body = res
 })
@@ -46,7 +44,11 @@ router.post('/deleteFriend', async (ctx) => {
 router.get('/:id/getApply', async (ctx) => {
   const res = await getRes(sql.chat.getApply(ctx.params.id))
   ctx.body = res
-  console.log(res);
+})
+
+router.get('/:id/getUserInfo', async (ctx) => {
+  const res = await getRes(sql.chat.getUserInfo(ctx.params.id))
+  ctx.body=res
 })
 
 

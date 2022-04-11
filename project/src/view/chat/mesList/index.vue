@@ -18,7 +18,7 @@ export default {
       })
       if (!a) this.toIdMsgArr.push(data)
     },
-    msgChange(data) {
+    msgRefresh() {
       this.getList()
     }
   },
@@ -27,25 +27,29 @@ export default {
   },
   data() {
     return {
-      toIdMsgArr: []
+      toIdMsgArr: [],
+      myData: JSON.parse(localStorage.getItem('userLogin'))
     };
   },
   methods: {
     getList() {
       this.toIdMsgArr=[]
-      const id = JSON.parse(localStorage.getItem('userLogin')).id;
+      const id = this.myData.id
       fetch.getAllMsg(id).then(res => {
-        res.data.forEach(item => {
-          const flag = this.toIdMsgArr.find(it => it.toID === item.toID)
-          if (!flag) this.toIdMsgArr.push(item)
-          else {
-            let index = -1
-            this.toIdMsgArr.forEach((it,ind) => {
-              index = ind
-            })
-            this.toIdMsgArr[index] = item
-          }
+        console.log(res);
+        const data = res.res1.data.concat(res.res2.data)
+
+        data.sort((a, b)=> {
+          if (new Date(a.time)> new Date(b.time)) return -1
+          else if (new Date(a.time) < new Date(b.time)) return 1
+          else return 0
         })
+        for (let i = 0 ; i < data.length; i++) {
+          const flag = this.toIdMsgArr.find(item => item.toID == data[i].toID)
+          if (!flag) {
+            this.toIdMsgArr.push(data[i])
+          }
+        }
       });
     }
   },

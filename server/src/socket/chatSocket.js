@@ -1,6 +1,6 @@
-const { time } = require('console');
 const { get } = require('../router/router');
 const { formatDateTime } = require('../util/sqlUtil')
+const { parse } =require('../util/util')
 
 function chatSocket() {
   const Koa = require('koa');
@@ -12,16 +12,58 @@ function chatSocket() {
   const sql = require('../mysql/sql')
 
   io.on('connection', socket => {
-    // socket.on('send', data => {
-    //   console.log('客户端发送的内容：', data);
-    //   socket.emit('getMsg', '我是返回的消息... ...');
-    // })
-    socket.on('sendMsg', async (data) => {
-      await getRes(sql.chat.insertyid(data))
-      const res = await getRes(sql.chat.getyid(data))
-      socket.emit('getMsg', res)
-      socket.emit('msgChange')
+    socket.on('connectID', data => {
+      socket.join(data)
     })
+
+    socket.on('sendMsg', async (data) => {
+      await getRes(sql.chat.insertyid1(data))
+      if (data.id != data.toID) await getRes(sql.chat.insertyid2(data))
+      if (data.id === data.toID) return;
+
+      socket.to(data.toID.toString()).emit('getMsg', data)
+      socket.to(data.toID.toString()).emit('msgRefresh')
+      socket.emit('msgRefresh')
+      const res = await getRes(sql.chat.getBadge(data))
+      socket.to(data.toID.toString()).emit('badgeValue', res)
+    })
+
+
+
+    socket.on('badgeValue', async (data) => {
+      const res = await getRes(sql.chat.getBadge(data))
+      console.log(data.id, res);
+      res.toID = data.toID
+      socket.emit('badgeValue', res)
+    })
+
+    socket.on('openChat', async (data) => { 
+      console.log(data);
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     socket.on('msgListInc', async (data) => {
       const emitData = {
         toID: data.id,
@@ -29,17 +71,38 @@ function chatSocket() {
       }
       socket.emit('msgListInc', emitData)
     })
+
     socket.on('applyAdd', async (data) => {
-      console.log(data);
-      const res = await getRes(sql.chat.addAppyFriend(data))
-      socket.emit('applyAddBack', 'asdsadas')
+      await getRes(sql.chat.addAppyFriend(data))
+      const res = await getRes(sql.chat.getApply(data.toID))
+      socket.to(data.toID.toString()).emit('refreshApply', res)
     })
+
     socket.on('applyAgree', async (data) => {
-      console.log(data);
       await getRes(sql.chat.agreeAddFriend1(data))
       await getRes(sql.chat.agreeAddFriend2(data))
-      const idArr = [data.myID,data.fromID]
-      socket.emit('applyAgreeBack', idArr)
+      await getRes(sql.chat.deleteApply(data))
+      const res = await getRes(sql.chat.getApply(data))
+      socket.emit('refreshApply', res)
+      socket.emit('contactRefresh')
+      socket.to(data.fromID.toString()).emit('contactRefresh')
+    })
+
+    socket.on('applyRefuse', async (data) => { 
+      await getRes(sql.chat.deleteApply(data))
+      const res = await getRes(sql.chat.getApply(data))
+      socket.emit('refreshApply', res)
+    })
+
+    socket.on('demo', id => {
+      socket.to(id).emit('demoBack','指定返回的消息')
+    })
+
+
+    // 刷新
+    socket.on('getApply', async (data) => {
+      const res = await getRes(sql.chat.getApply(data))
+      socket.emit('refreshApply', res)
     })
   })
 
