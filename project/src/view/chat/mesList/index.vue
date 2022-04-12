@@ -82,7 +82,6 @@ export default {
   border: 1px solid red;
 }
 .activeCard {
-  color: #1686f5;
   background-color: rgb(240, 248, 255);
   border-color: rgb(148, 197, 238);
   font-size: 14px;

@@ -87,8 +87,7 @@ export default {
 >>> .el-tree-node__content {
   height: 60px;
   padding-left:0px;
+  background-color: #ecf5ff;
 }
-.count {
 
-}
 </style>

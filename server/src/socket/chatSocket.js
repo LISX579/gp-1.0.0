@@ -43,6 +43,12 @@ function chatSocket() {
       socket.emit('badgeValue',res)
     })
 
+    socket.on('avgCount', async (data) => { 
+      const res = await getRes(sql.chat.getAvgBadge(data))
+      console.log(sql.chat.getAvgBadge(data));
+      socket.emit('avgBadge', res)
+    })
+
 
 
 

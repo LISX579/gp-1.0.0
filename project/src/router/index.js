@@ -35,6 +35,11 @@ export default new Router({
           path: 'chat',
           name: 'chat',
           component: require('../view/chat').default
+        },
+        {
+          path: 'stuManage',
+          name: 'stuManage',
+          component: require('../view/stuManage').default
         }
       ]
     }

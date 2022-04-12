@@ -72,6 +72,7 @@ export default {
               message: '登录成功！'
             })
             // this.$socket.connect()
+            this.formData.permission = res.data[0].permission
             this.formData.text = res.data[0].text
             this.formData.username = res.data[0].username
             this.formData.img = res.data[0].img

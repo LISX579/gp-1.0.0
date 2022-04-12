@@ -2,8 +2,8 @@ const { get } = require('../router/router')
 const { formatDateTime} = require('../util/sqlUtil')
 const sql = {
   // 登录注册
-  'login': (username, password) => `select username,img,text from user where id='${username}' and password='${password}' and status='offline'`,
-  'register': (id, username, password, sex, img) => `insert into user (id,username,password,status,text,img,sex) values (${id},'${username}', '${password}', 'online', '没有个签就是最好的个签','${img}','${sex}')`,
+  'login': (username, password) => `select username,img,text,permission from user where id='${username}' and password='${password}' and status='offline'`,
+  'register': (id, username, password, sex, img) => `insert into user (id,username,password,status,text,img,sex,permission) values (${id},'${username}', '${password}', 'online', '没有个签就是最好的个签','${img}','${sex}','user')`,
   
   'changeStatus': (id) => `update user set status='online' where id=${id}`,
 
@@ -54,6 +54,7 @@ const sql = {
     'getUserInfo': id => `select id,username,img,text from user where id='${id}'`,
 
     'getBadge': (data) => `select count(*) as count from yid${data.id} where id=${data.toID} and toID=${data.id} and status='unread'`,
+    'getAvgBadge': (id) => `select count(*) as count from yid${id} where toID=${id} and status='unread'`,
 
     'getName': (id) => `select username from user where id='${id}'`,
 

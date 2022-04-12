@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="cardPeo" @click="contactClick" v-if="type==='contact'">
+    <div class="cardPeo contact-class" @click="contactClick" v-if="type==='contact'">
       <el-avatar size="large" class="headImg"></el-avatar>
       &emsp;{{ data.username }}({{ data.id }})
       <div class="control">
@@ -21,10 +21,11 @@
     </div>
     <div v-if="type==='msgList'" class="msgClass">
       <div @click="cardClick">
-        <el-badge :value="count" class="item">
-          <el-avatar size="large" class="headImg"/>
+        <el-avatar size="large" class="headImg"/>
+        <el-badge v-if="count!=0" :value="count" class="item">
+          &emsp;{{ data.username }}({{ data.toID }})&nbsp;&nbsp;
         </el-badge>
-        &emsp;{{ data.username }}({{ data.toID }})
+        <span v-else> &emsp;{{ data.username }}({{ data.toID }})</span>
         <div class="control">
           <el-dropdown trigger="click" placement="bottom-end" @command="dropClick">
             <el-button @click.stop type="text" style="margin-bottom: 20px">
@@ -92,6 +93,11 @@ import drawerInfo from "@/view/selfInfo";
 import modalRemove from "@/view/chat/contacts/modal_remove";
 
 export default {
+  watch: {
+    'count': function () {
+      this.$socket.emit('avgCount', JSON.parse(localStorage.getItem('userLogin')).id)
+    }
+  },
 
   sockets: {
     badgeValue(res) {
@@ -117,7 +123,6 @@ export default {
     },
     self() {
       let id = JSON.parse(localStorage.getItem('userLogin')).id;
-      console.log(id, this.data);
       if (id == this.data.id) return true;
       else return false;
     }

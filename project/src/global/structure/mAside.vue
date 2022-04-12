@@ -18,8 +18,17 @@
         <span slot="title">个人信息</span>
       </el-menu-item>
       <el-menu-item index="chat">
-        <i class="el-icon-chat-round"></i>
-        <span slot="title">通讯</span>
+        <el-badge :value="count" v-if="count!=0">
+          <i class="el-icon-chat-round"></i>
+        </el-badge>
+        <i v-else class="el-icon-chat-round"></i>
+        <span slot="title">
+          通讯
+        </span>
+      </el-menu-item>
+      <el-menu-item v-if="myLoginData.permission=='admin'" index="stuManage">
+        <i class="el-icon-box"></i>
+        <span slot="title">学生管理</span>
       </el-menu-item>
 <!--      <el-menu-item index="2">-->
 <!--        <i class="el-icon-menu"></i>-->
@@ -31,10 +40,17 @@
 
 <script>
 export default {
+  sockets: {
+    avgBadge(res) {
+      this.count = res.data[0].count
+    }
+  },
   data() {
     return {
       isCollapse: false,
-      menuActiveItme: 'overview'
+      menuActiveItme: 'overview',
+      myLoginData: JSON.parse(localStorage.getItem('userLogin')),
+      count: 0
     }
   },
   methods: {
@@ -42,12 +58,17 @@ export default {
       this.$router.push({ name: val})
       this.menuActiveItme = val
     }
+  },
+  mounted() {
+    this.$bus.$on ('countChange', ()=> {
+      this.sockets.emit('avgCount', this.myLoginData.id)
+    })
   }
 }
 </script>
 
-<style>
-.el-aside {
+<style scoped>
+>>>.el-aside {
   color: #333;
 }
 
@@ -61,7 +82,10 @@ export default {
   height: 54px;
 }
 
-.el-menu--collapse {
+>>>.el-menu--collapse {
   width: 100%;
+}
+>>>.el-badge__content.is-fixed {
+  top: 9px;
 }
 </style>

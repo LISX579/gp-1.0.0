@@ -44,4 +44,7 @@ export default {
 >>> .el-tabs__content {
   padding: 0;
 }
+>>> .el-tabs__nav-scroll {
+  background-color: #c6e2ff;
+}
 </style>
