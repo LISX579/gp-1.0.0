@@ -37,7 +37,10 @@ function chatSocket() {
     })
 
     socket.on('openChat', async (data) => { 
-      console.log(data);
+      await getRes(sql.chat.read(data))
+      const res = await getRes(sql.chat.getBadge(data))
+      res.toID = data.toID
+      socket.emit('badgeValue',res)
     })
 
 

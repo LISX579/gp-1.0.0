@@ -71,13 +71,12 @@ export default {
 .center {
   flex-grow: 1;
   height: 100%;
-  background-color: powderblue;
 }
 
 .right {
   flex-basis: 25%;
   height: 100%;
-  background-color: pink;
+  background-color: #ecf5ff;
 }
 
 >>> .el-tabs {

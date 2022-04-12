@@ -59,10 +59,10 @@ export default {
   min-width: 50px;
   max-width: 150px;
   min-height: 31px;
-  background: #f4f4f5;
+  background: #409eff;;
   border-radius: 5px;
   margin: 5px 5px 5px 5px ;
-  padding: 5px 5px 5px 5px;
+  padding: 10px 10px;
 }
 
 .chatBox-right:after {
@@ -73,7 +73,7 @@ export default {
   width: 8px;
   height: 8px;
   transform: rotate(45deg);
-  background-color: #f4f4f5;
+  background-color: #409eff;;
 }
 
 .chatBox-left {
@@ -87,7 +87,7 @@ export default {
   background: #faecd8;
   border-radius: 5px;
   margin: 5px 5px 5px 5px ;
-  padding: 5px 5px 5px 5px;
+  padding: 10px 10px;
 }
 
 .chatBox-left:after {

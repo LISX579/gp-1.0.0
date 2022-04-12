@@ -55,7 +55,9 @@ const sql = {
 
     'getBadge': (data) => `select count(*) as count from yid${data.id} where id=${data.toID} and toID=${data.id} and status='unread'`,
 
-    'getName': (id) => `select username from user where id='${id}'`
+    'getName': (id) => `select username from user where id='${id}'`,
+
+    'read': (data) => `update yid${data.id} set status='read' where (id=${data.id} and toID=${data.toID}) or (id=${data.toID} and toID=${data.id})`
   }
 }
 

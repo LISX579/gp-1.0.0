@@ -34,7 +34,6 @@
         @close="modalClose"
       ></component>
     </el-dialog>
-    <el-button @click="click">发送</el-button>
   </div>
 </template>
 
