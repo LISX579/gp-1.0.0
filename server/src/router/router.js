@@ -2,8 +2,6 @@ const Router = require('koa-router')
 const router = new Router()
 const { getRes, delay } = require('../util/sqlUtil')
 const sql = require('../mysql/sql')
-// const img = require('../assets/boy.png')
-
 
 router.get('/login', async (ctx) => {
   const res = await getRes(sql.login(ctx.query.id, ctx.query.password))

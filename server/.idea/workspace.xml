@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40c5af77-2291-406a-9cbd-a1d5e8277cf9" name="Default Changelist" comment="" />
+    <list default="true" id="40c5af77-2291-406a-9cbd-a1d5e8277cf9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../project/src/fetch/stuManage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../project/src/global/pageTable.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../project/src/view/stuManage/table/page_table.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../project/src/view/stuManage/tableView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project/src/view/stuManage/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../project/src/view/stuManage/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql/sql.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/sql.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/chatSocket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/chatSocket.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="26YE0wMUmgWntAIpKBaN3iY481x" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -18,6 +32,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="40c5af77-2291-406a-9cbd-a1d5e8277cf9" name="Default Changelist" comment="" />
@@ -26,7 +41,11 @@
       <option name="presentableId" value="Default" />
       <updated>1647591901910</updated>
       <workItem from="1647591903520" duration="2000" />
+      <workItem from="1649936048394" duration="11000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

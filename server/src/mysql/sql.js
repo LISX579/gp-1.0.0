@@ -59,6 +59,19 @@ const sql = {
     'getName': (id) => `select username from user where id='${id}'`,
 
     'read': (data) => `update yid${data.id} set status='read' where (id=${data.id} and toID=${data.toID}) or (id=${data.toID} and toID=${data.id})`
+  
+  
+  },
+  'stuManage': {
+    'getBaseInfo': (data) => `select * from baseuserinfo RIGHT JOIN xManage${data.id} on baseuserinfo.id=xmanage${data.id}.id limit ${data.page},10`,
+    'getBaseInfoTotal': (data) =>  `select count(*) as count from baseuserinfo RIGHT JOIN xManage${ data.id } on baseuserinfo.id = xmanage${ data.id }.id `,
+    
+    'stuManageDelete': data => `delete from xmanage${data.id} where id='${data.toID}'`,
+    
+    'stuManageIncrease': data => `insert into xmanage${data.id} values ('${data.toID}', '${data.name}')`,
+    
+    'stuManageEdit1': (id, data) => `update baseUserInfo set name='${data.name}',idNumber='${data.idNumber}',nation='${data.nation}',nationality='${data.nationality}', PlaceOfOrigin='${data.PlaceOfOrigin}',sex='${data.sex}',registeredResidence='${data.registeredResidence}' where id='${data.id}'`,
+    'stuManageEdit2': (id, data) => `update xmanage${id} set name='${data.name}' where id='${data.id}'`
   }
 }
 
