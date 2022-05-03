@@ -13,7 +13,7 @@
         <i class="el-icon-s-home"/>
         <span slot="title">概览</span>
       </el-menu-item>
-      <el-menu-item index="selfInfo">
+      <el-menu-item v-if="myLoginData.permission=='user'" index="selfInfo">
         <i class="el-icon-user-solid"></i>
         <span slot="title">个人信息</span>
       </el-menu-item>

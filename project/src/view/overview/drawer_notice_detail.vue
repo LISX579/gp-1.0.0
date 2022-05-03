@@ -1,22 +1,21 @@
 <template>
   <div class="detail-wrap">
-    <div class="cardPeo">
-      <el-avatar size="large" class="headImg"></el-avatar>
-      &emsp;{{data.username}}({{data.fromID}})<br>
-    </div>
     <div class="form-wrap">
-      <el-form ref="form" label-position="left">
-        <el-form-item label="用户名" label-width="150px">
-          <span>{{data.username}}</span>
+      <el-form label-position="left" ref="form">
+        <el-form-item label="标题" label-width="150px">
+          <span>{{data.title}}</span>
         </el-form-item>
-        <el-form-item label="用户ID" label-width="150px">
-          <span>{{data.fromID}}</span>
+        <el-form-item label="教工号" label-width="150px">
+          <span>{{data.id}}</span>
         </el-form-item>
-        <el-form-item label="个性签名" label-width="150px">
-          <span>{{data.text}}</span>
+        <el-form-item label="姓名" label-width="150px">
+          <span>{{data.tName}}</span>
         </el-form-item>
-        <el-form-item label="对方留言" label-width="150px">
-          <span>{{data.checkInfo}}</span>
+        <el-form-item label="时间" label-width="150px">
+          <span>{{this.formatDateTime(data.time)}}</span>
+        </el-form-item>
+        <el-form-item label="公告内容" label-width="150px">
+          <span>{{data.content}}</span>
         </el-form-item>
       </el-form>
     </div>
@@ -24,7 +23,9 @@
 </template>
 
 <script>
+import util from "@/util/util";
 export default {
+  mixins:[util],
   props: {
     data: {
       type: Object,
@@ -57,5 +58,8 @@ export default {
   white-space: nowrap;
   display: inline-block;
   max-width: 280px;
+}
+.form-wrap {
+  margin-left: 20px;
 }
 </style>

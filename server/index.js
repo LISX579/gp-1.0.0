@@ -6,7 +6,7 @@ const chat = require('./src/router/chat')
 server.use(cors({}))
 const stuManage = require('./src/router/stuMange')
 
-const chatSocket = require('./src/socket/chatSocket')
+const chatSocket = require('./src/socket/socket')
 chatSocket()
 
 server.use(route.routes())

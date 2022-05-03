@@ -12,8 +12,11 @@ router.get('/login', async (ctx) => {
   }
 })
 router.get('/register', async (ctx) => {
-  const res = await getRes(sql.register(ctx.query.id, ctx.query.username, ctx.query.password, ctx.query.sex))
+  const tid = ctx.query.permission == 'admin' ? '0' : ctx.query.tId
+  const res = await getRes(sql.register(ctx.query.id, ctx.query.username, ctx.query.password, ctx.query.sex, '', ctx.query.permission, tid))
   if (res.data) {
+    if (ctx.query.permission === 'admin') await getRes(sql.createxm(ctx.query.id))
+    else await getRes(sql.insertxm(ctx.query))
     await getRes(sql.insertBaseInfo(ctx.query.id))
     await getRes(sql.insertStuInfo(ctx.query.id))
     await getRes(sql.createyid(ctx.query.id))
@@ -38,7 +41,7 @@ router.post('/exit/:id', async (ctx) => {
 
 router.get('/:id/baseInfo', async (ctx) => {
   const res = await getRes(sql.baseInfo(ctx.params.id))
-  await delay(2000, ()=> {
+  await delay(1000, ()=> {
     if (res.data) {
       ctx.body = res
     } else {
@@ -51,7 +54,7 @@ router.get('/:id/baseInfo', async (ctx) => {
 
 router.get('/:id/studInfo', async (ctx) => {
   const res = await getRes(sql.stuInfo(ctx.params.id))
-  await delay(2000, () => {
+  await delay(1000, () => {
     if (res.data) {
       ctx.body = res
     } else {

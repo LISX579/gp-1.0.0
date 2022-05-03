@@ -4,10 +4,24 @@ const { getRes, delay } = require('../util/sqlUtil')
 const sql = require('../mysql/sql')
 
 
-router.get('/mStuInfo', async (ctx) => {
+router.get('/mBaseInfo', async (ctx) => {
   const res = await getRes(sql.stuManage.getBaseInfo(ctx.query))
   const result = await getRes(sql.stuManage.getBaseInfoTotal(ctx.query))
-  console.log(sql.stuManage.getBaseInfo(ctx.query));
+
+  const total = result.data[0].count
+  totalPage = total % 10 === 0 ? total / 10 : total / 10 + 1
+  await delay(500, () => {
+    ctx.body = {
+      res,
+      total: total,
+      totalPage: parseInt(totalPage)
+    }
+  })
+})
+
+router.get('/mStuInfo', async (ctx) => {
+  const res = await getRes(sql.stuManage.getStuInfo(ctx.query))
+  const result = await getRes(sql.stuManage.getStuInfoTotal(ctx.query))
 
   const total = result.data[0].count
   totalPage = total % 10 === 0 ? total / 10 : total / 10 + 1

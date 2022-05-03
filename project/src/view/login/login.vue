@@ -1,22 +1,32 @@
 <template>
     <div class="con" v-loading="loading">
       <el-form
+        label-position="left"
           v-model="formData"
           label-width="80px">
-        <el-form-item label="账户" required>
+        <el-form-item label="账户" required label-width="100px">
           <el-input v-model="formData.id"></el-input>
         </el-form-item>
-        <el-form-item v-if="register" label="姓名" required>
+        <el-form-item v-if="register" label="姓名" required label-width="100px">
           <el-input v-model="formData.username"></el-input>
         </el-form-item>
-        <el-form-item v-if="register" label="性别" required>
+        <el-form-item v-if="register" label="性别" required label-width="100px">
           <el-radio-group style="text-align: left" v-model="formData.sex" size="medium">
             <el-radio label="男"></el-radio>
             <el-radio label="女"></el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="密码" required>
+        <el-form-item label="密码" required label-width="100px">
           <el-input v-model="formData.password" show-password></el-input>
+        </el-form-item>
+        <el-form-item label="是否为管理员" v-if="register" label-width="100px">
+          <el-radio-group style="text-align: left" v-model="formData.permission" size="medium">
+            <el-radio label="admin">是</el-radio>
+            <el-radio label="user">否</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item v-if="formData.permission==='user' && register" label-width="100px" label="教师编号">
+          <el-input v-model="formData.tId"></el-input>
         </el-form-item>
         <el-button @click="confirm">{{register ? '注册' : '登录'}}</el-button>
       </el-form>
@@ -35,7 +45,9 @@ export default {
   },
   data () {
     return {
-      formData: {},
+      formData: {
+        permission: 'user'
+      },
       loading: false
     }
   },
@@ -52,7 +64,7 @@ export default {
               message: '注册成功，自动以该账户登录...'
             })
             // this.$socket.connect()
-            this.$router.push({name: 'graduation'})
+            this.$router.push({name: 'overview'})
             localStorage.setItem('userLogin', JSON.stringify(this.formData))
           } else {
             this.$notify.error({
@@ -72,6 +84,7 @@ export default {
               message: '登录成功！'
             })
             // this.$socket.connect()
+            this.formData.tid = res.data[0].tid
             this.formData.permission = res.data[0].permission
             this.formData.text = res.data[0].text
             this.formData.username = res.data[0].username
@@ -95,7 +108,7 @@ export default {
   },
   mounted() {
     if(JSON.parse(localStorage.getItem('userLogin'))) {
-      this.$router.push({name: 'graduation'})
+      this.$router.push({name: 'overview'})
     }
   }
 }

@@ -3,7 +3,7 @@
 
     <el-tabs v-model="activeName" @tab-click="handleClick" style="height: 100%">
       <el-tab-pane label="学生信息管理" name="stuInfo" style="height: 100%">
-        <page-table
+        <base-info-table
           :data="tableData"
           :loading="loading"
           :total="total"
@@ -11,18 +11,31 @@
           @refresh="getList"
           @pageChange="getList"
         >
-        </page-table>
+        </base-info-table>
+      </el-tab-pane>
+      <el-tab-pane label="学籍信息管理" name="stuStatusInfo" style="height: 100%">
+        <sut-info-table
+          :data="tableData"
+          :loading="loading"
+          :total="total"
+          :totalPage="totalPage"
+          @refresh="getList"
+          @pageChange="getList"
+        >
+        </sut-info-table>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
-import pageTable from "@/view/stuManage/table/page_table";
+import baseInfoTable from "@/view/stuManage/baseInfo/page_table";
+import sutInfoTable from "@/view/stuManage/stuInfo/page_table";
 import fetch from "@/fetch/stuManage";
 export default {
   components: {
-    pageTable,
+    baseInfoTable,
+    sutInfoTable
   },
   data() {
     return {
@@ -41,18 +54,38 @@ export default {
     selectId (id) {
     },
     getList(val) {
-      this.loading = true
-      const _data = {
-        id: this.id,
-        page: this.currentPage
+      if (this.activeName == 'stuInfo') {
+        this.loading = true
+        const _data = {
+          id: this.id,
+          page: this.currentPage === 1 ? 0 : this.currentPage
+        }
+        if (val) _data.page = (val - 1) * 10
+        fetch.getMBaseInfo(_data).then(res => {
+          this.tableData = res.res.data;
+          this.total = res.total
+          this.totalPage = res.totalPage
+          this.loading = false
+        });
+      } else if (this.activeName == 'stuStatusInfo') {
+        this.loading = true
+        const _data = {
+          id: this.id,
+          page: this.currentPage === 1 ? 0 :  this.currentPage
+        }
+        if (val) _data.page = (val - 1) * 10
+        fetch.getStuInfo(_data).then(res => {
+          this.tableData = res.res.data;
+          this.total = res.total
+          this.totalPage = res.totalPage
+          this.loading = false
+        });
       }
-      if (val) _data.page = (val - 1) * 10 + 1
-      fetch.getMBaseInfo(_data).then(res => {
-        this.tableData = res.res.data;
-        this.total = res.total
-        this.totalPage = res.totalPage
-        this.loading = false
-      });
+    }
+  },
+  watch: {
+    'activeName': function () {
+      this.getList()
     }
   },
   mounted() {

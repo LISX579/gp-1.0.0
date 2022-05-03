@@ -65,7 +65,7 @@ export default {
 .left {
   flex-basis: 25%;
   height: 100%;
-  background-color: pink;
+  background-color: #ecf5ff;
 }
 
 .center {
@@ -78,9 +78,12 @@ export default {
   height: 100%;
   background-color: #ecf5ff;
 }
-
+>>>. .el-tabs--border-card {
+  background-color: #ecf5ff;
+}
 >>> .el-tabs {
   height: 100%;
+  background-color: #ecf5ff;
 }
 
 >>> .el-tabs--top {

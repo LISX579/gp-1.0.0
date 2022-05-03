@@ -6,17 +6,17 @@
     >
       <el-table-column label="ID号">
         <template slot-scope="scope">
-          <a @click.stop="showDetail(scope.row)"> {{scope.row.fromID}}</a>
+          <a @click.stop="showDetail(scope.row)"> {{scope.row.fromId}}</a>
         </template>
       </el-table-column>
       <el-table-column label="姓名">
         <template slot-scope="scope">
-          {{scope.row.username}}
+          {{scope.row.name}}
         </template>
       </el-table-column>
       <el-table-column label="申请类型">
         <template slot-scope="scope">
-          {{transType(scope.row.opType)}}
+          修改基本信息
         </template>
       </el-table-column>
       <el-table-column label="是否同意">
@@ -30,14 +30,14 @@
 
     <el-drawer
       :visible.sync="drawerVisible"
-      size="30%"
+      size="45%"
       :modal="false"
       :title="drawerTitle"
     >
-      <applyDetail
+      <drawerPendingInfo
         :data="drawerData"
         @drawerClose="drawerClose"
-      ></applyDetail>
+      ></drawerPendingInfo>
     </el-drawer>
     <div class="footer">
       <el-button @click="close">关闭</el-button>
@@ -46,10 +46,10 @@
 </template>
 
 <script>
-import applyDetail from "@/view/chat/contacts/drawer_applyDetail";
+import drawerPendingInfo from "@/view/stuManage/baseInfo/drawer_pending_info";
 export default {
   components: {
-    applyDetail
+    drawerPendingInfo
   },
   data() {
     return {
@@ -59,13 +59,9 @@ export default {
     }
   },
   props: {
-    userId: {
-      type: String,
-      default: ''
-    },
     tableData: {
       type: Array,
-      default: []
+      default: () => { return []}
     }
   },
   computed: {
@@ -73,15 +69,16 @@ export default {
   },
   methods: {
     agree(data){
-      data.myID = JSON.parse(localStorage.getItem('userLogin')).id
-      this.$socket.emit('applyAgree', data)
+      this.$socket.emit('xmBaseAgree', data)
     },
     refuse(data){
-      data.myID = JSON.parse(localStorage.getItem('userLogin')).id
-      this.$socket.emit('applyRefuse', data)
+      this.$socket.emit('xmBaseRefuse', data)
     },
     close () {
       this.$emit('close')
+    },
+    confirm () {
+
     },
     transType(val) {
       switch (val){
@@ -90,7 +87,7 @@ export default {
       }
     },
     showDetail(val) {
-      this.drawerTitle = this.transType(val.opType)
+      this.drawerTitle = '修改详情'
       this.drawerData = val
       this.drawerVisible=true
     },
@@ -100,13 +97,13 @@ export default {
     },
   },
   mounted() {
-    console.log(this.tableData);
   }
 }
 </script>
 
-<style>
+<style scoped>
 .footer {
   text-align: right;
 }
+
 </style>

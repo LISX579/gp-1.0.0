@@ -20,9 +20,13 @@
 
       <!--    右操作按钮 控制列消失显示-->
       <div class="action-right">
-        <el-button type="text" style="font-size: 20px;padding-top: 0px; margin-right: 5px" icon="el-icon-bell"/>
+        <el-button v-if="pdTableData.length==0" type="text" @click="showPending" style="font-size: 20px;position: absolute;right: 66px;top: -8px; " icon="el-icon-bell"/>
+        <el-badge v-else :value="pdTableData.length" class="item" style="position: absolute;right: 50px;">
+          <el-button  type="text" @click="showPending" style="font-size: 20px; padding-top: 3px; margin-right: 15px" icon="el-icon-bell"/>
+        </el-badge>
 
-          <el-button size="mini" @click="drawerShow">
+
+          <el-button style="position: absolute;right: -2px;" size="mini" @click="drawerShow">
             <i class="el-icon-setting"></i>
           </el-button>
 
@@ -40,6 +44,7 @@
       <component
         :is="modalName"
         :id="id"
+        :tableData="pdTableData"
         :selectItem="selectItem"
         @close="modalClose"
       ></component>
@@ -150,11 +155,23 @@
 <script>
 import pageTable from "@/global/pageTable";
 import tableView from "@/view/stuManage/tableView";
-import modalDelete from "@/view/stuManage/table/modal_delete";
-import modalEdit from "@/view/stuManage/table/modal_edit";
-import modalIncrease from "@/view/stuManage/table/modal_increase";
-import drawerList from "@/view/stuManage/table/drawer_list";
+import modalDelete from "@/view/stuManage/baseInfo/modal_delete";
+import modalEdit from "@/view/stuManage/baseInfo/modal_edit";
+import modalIncrease from "@/view/stuManage/baseInfo/modal_increase";
+import drawerList from "@/view/stuManage/baseInfo/drawer_list";
+import pending from "@/view/stuManage/baseInfo/modal_pending";
 export default {
+  sockets: {
+    refreshBase(res){
+      if (!res.data) this.pdTableData=[]
+      else {
+        this.pdTableData = res.data.map(item => {
+          item.data = JSON.parse(item.data)
+          return item
+        })
+      }
+    }
+  },
   props: {
     data: {
       type: Array,
@@ -178,7 +195,8 @@ export default {
     modalDelete,
     modalEdit,
     modalIncrease,
-    drawerList
+    drawerList,
+    pending
   },
   mixins: [pageTable],
   data() {
@@ -193,7 +211,8 @@ export default {
       currentPage: 1,
       drawerVisible: false,
       allColumnList: ['学号','姓名','性别','曾用名','身份证号','生源地','血型','民族','政治面貌','国籍','地址'],
-      columnList: ['学号','姓名','性别','曾用名','身份证号','生源地','血型','民族','政治面貌','国籍','地址']
+      columnList: ['学号','姓名','性别','曾用名','身份证号','生源地','血型','民族','政治面貌','国籍','地址'],
+      pdTableData: []
     };
   },
   methods: {
@@ -217,6 +236,11 @@ export default {
       }
       this.dialogVisible = true
       this.modalName = val;
+    },
+    showPending () {
+      this.modalTitle = '待处理'
+      this.dialogVisible = true
+      this.modalName = 'pending' ;
     },
     modalClose() {
       this.modalName = null;
@@ -246,12 +270,14 @@ export default {
       this.drawerVisible = false
     },
     changeColunmArr (val) {
-      localStorage.setItem('columnList',JSON.stringify(val))
+      localStorage.setItem('base_columnList',JSON.stringify(val))
       this.columnList = val
+      this.$bus.$emit('tableRelayout')
     }
   },
   mounted() {
-    const columnList = JSON.parse(localStorage.getItem('columnList'))
+    this.$socket.emit('basePending',this.id)
+    const columnList = JSON.parse(localStorage.getItem('base_columnList'))
     if (columnList !== null) {
       this.columnList = columnList
     }
@@ -293,5 +319,9 @@ export default {
   display: inline-block;
   position: absolute;
   right: 10px;
+}
+>>> .el-badge__content.is-fixed {
+  top: 8px;
+  right: 20px;
 }
 </style>

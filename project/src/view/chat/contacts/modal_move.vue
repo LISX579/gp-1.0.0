@@ -59,6 +59,7 @@ export default {
       fetch.contact_move(postData).then(res => {
         this.$bus.$emit('contact_move')
       })
+      this.close()
     }
   },
   mounted() {

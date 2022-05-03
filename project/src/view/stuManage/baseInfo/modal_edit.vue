@@ -5,11 +5,11 @@
       :closable="false"
     ><span slot="title">
       <i class="el-alert__icon el-icon-warning"/>
-      &emsp;此操作会更改该学生的学籍信息，确认要删除吗？<br>
+      &emsp;此操作会更改该学生的基本信息，确认要删除吗？<br>
      </span>
     </el-alert>
     <div class="modal-form-wrap">
-      <el-form ref="form" :model="formData" :rules="rules" label-width="180px" >
+      <el-form label-position="left" ref="form" :model="formData" :rules="rules" label-width="180px" >
         <el-form-item label="学号" label-width="120px">
           {{formData.id}}
         </el-form-item>

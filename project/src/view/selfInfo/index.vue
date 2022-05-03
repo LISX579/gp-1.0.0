@@ -80,4 +80,10 @@ export default {
 >>> .el-tab-pane {
   height: 100%;
 }
+>>> .el-tabs__nav-scroll{
+  background-color: white !important;
+}
+>>> .el-tabs{
+  background-color: white !important;
+}
 </style>

@@ -1,24 +1,15 @@
 <template>
   <div class="dialog-wrap">
     <div class="form-wrap">
-      <el-form ref="form" label-position="left" :model="form" :rules="rules" label-width="180px" >
+      <el-form label-position="left" ref="form" :model="form" :rules="rules" label-width="180px" >
         <el-form-item required prop="input">
-          <span slot="label">请输入好友名字/ID号</span>
+          <span slot="label">搜索学生ID/姓名</span>
           <el-input v-model="form.input" style="display: inline-block;width: 80%;margin-right: 5px"/><el-button @click="find">查找</el-button>
         </el-form-item>
         <div v-if="finData.length" class="card-wrap">
           <div v-for="item in finData" :class="selectedCard===item ? 'selectedClass': ''">
             <cardOfpeople :data="item" :type="'findCard'" @selectCard="selectCard"></cardOfpeople>
           </div>
-          <el-input
-            v-if="selectedCard"
-            type="textarea"
-            :autosize="{ minRows: 4, maxRows: 6}"
-            placeholder="请输入验证消息..."
-            v-model="form.checkInfo"
-            style="margin-top: 10px"
-          >
-          </el-input>
         </div>
       </el-form>
     </div>
@@ -31,6 +22,7 @@
 
 <script>
 import fetch from "@/fetch/chat";
+import stuManage from "@/fetch/stuManage";
 import cardOfpeople from "@/view/chat/contacts/cardOfpeople";
 export default {
   components: {
@@ -69,21 +61,15 @@ export default {
       })
     },
     confirm () {
-      let data = {
-        username: JSON.parse(localStorage.getItem('userLogin')).username,
-        img: JSON.parse(localStorage.getItem('userLogin')).img,
-        text: JSON.parse(localStorage.getItem('userLogin')).text,
-        checkInfo: this.form.checkInfo,
-        opType: 'addFriend',
-        fromID: JSON.parse(localStorage.getItem('userLogin')).id
-      }
       const postData = {
         id: JSON.parse(localStorage.getItem('userLogin')).id,
         toID: this.selectedCard.id,
-        data: JSON.stringify(data),
+        name: this.selectedCard.username
       }
-      this.$socket.emit('applyAdd', postData)
-      this.close()
+      stuManage.stuManageIncrease(postData).then(res => {
+        this.$bus.$emit('stuRefresh')
+        this.close()
+      })
     }
   },
   mounted() {

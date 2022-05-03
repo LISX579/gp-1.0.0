@@ -5,6 +5,7 @@
       :height="tableHeight"
       v-loading="loading"
       @select="select"
+      ref="table"
     >                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 >
       <slot></slot>
     </el-table>
@@ -44,6 +45,11 @@ export default {
     }
   },
   mounted() {
+    this.$bus.$on('tableRelayout', () => {
+      this.$nextTick(() => {
+        this.$refs.table.doLayout()
+      })
+    })
   }
 };
 </script>

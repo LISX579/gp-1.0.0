@@ -4,9 +4,6 @@
       <el-tab-pane label="好友" name="single" style="height: 100%">
         <single :id="id"/>
       </el-tab-pane>
-      <el-tab-pane label="群聊" name="group" style="height: 100%">
-
-      </el-tab-pane>
     </el-tabs>
     <control-bar :id="id"></control-bar>
   </div>

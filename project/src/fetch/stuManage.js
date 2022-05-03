@@ -4,7 +4,7 @@ const _thisApi = api
 
 export default {
   'getMBaseInfo': function (data) {
-    return fetch(_thisApi + '/mStuInfo', 'get', {},data)
+    return fetch(_thisApi + '/mBaseInfo', 'get', {},data)
   },
   'stuManageDelete': function (data) {
     return fetch(_thisApi + '/stuManageDelete','post',{},data)
@@ -14,5 +14,9 @@ export default {
   },
   'stuManageEdit': function (data) {
     return fetch(_thisApi + '/stuManageEdit', 'post', {}, data)
+  },
+  'getStuInfo': function (data) {
+    return fetch(_thisApi + '/mStuInfo', 'get', {},data)
+
   }
 }

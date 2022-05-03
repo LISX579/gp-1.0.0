@@ -2,15 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40c5af77-2291-406a-9cbd-a1d5e8277cf9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../project/src/fetch/stuManage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../project/src/global/pageTable.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../project/src/view/stuManage/table/page_table.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../project/src/view/stuManage/tableView.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../project/src/view/overview/modal_newNotice.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../project/src/view/overview/noticeView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project/src/view/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../project/src/view/login/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project/src/view/overview/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../project/src/view/overview/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../project/src/view/stuManage/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../project/src/view/stuManage/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mysql/sql.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/sql.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/socket/chatSocket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/chatSocket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/stuMange.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/stuMange.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/chatSocket.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +43,7 @@
       <updated>1647591901910</updated>
       <workItem from="1647591903520" duration="2000" />
       <workItem from="1649936048394" duration="11000" />
+      <workItem from="1650516099396" duration="57000" />
     </task>
     <servers />
   </component>
