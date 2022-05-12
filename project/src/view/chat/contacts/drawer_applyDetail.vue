@@ -1,7 +1,8 @@
 <template>
   <div class="detail-wrap">
     <div class="cardPeo">
-      <el-avatar size="large" class="headImg"></el-avatar>
+      <el-avatar v-if="data.sex=='男'" size="large" class="headImg" :src="require('@/assets/img/boy.jpg')"></el-avatar>
+      <el-avatar v-if="data.sex=='女'" size="large" class="headImg" :src="require('@/assets/img/girl.jpg')"></el-avatar>
       &emsp;{{data.username}}({{data.fromID}})<br>
     </div>
     <div class="form-wrap">

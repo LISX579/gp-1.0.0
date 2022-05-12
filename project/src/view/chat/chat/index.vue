@@ -21,7 +21,7 @@
         @keyup.enter.native="sendMessage"
       />
       <div class="footer">
-        <el-button @click="close">关闭</el-button>
+<!--        <el-button @click="close">关闭</el-button>-->
         <el-button @click="sendMessage" type="warning" plain>发送</el-button>
       </div>
     </div>
@@ -59,7 +59,8 @@ export default {
         id: this.id,
         toID: this.toID,
         content: this.msg,
-        time: new Date(new Date())
+        time: new Date(new Date()),
+        sex: JSON.parse(localStorage.getItem('userLogin')).sex
       };
       this.$socket.emit('sendMsg', postData);
       this.msg = '';

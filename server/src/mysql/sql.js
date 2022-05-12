@@ -2,7 +2,7 @@ const { get } = require('../router/router')
 const { formatDateTime} = require('../util/sqlUtil')
 const sql = {
   // 登录注册
-  'login': (username, password) => `select username,img,text,permission,tid from user where id='${username}' and password='${password}' and status='offline'`,
+  'login': (username, password) => `select username,img,text,permission,tid,sex from user where id='${username}' and password='${password}' and status='offline'`,
   'register': (id, username, password, sex, img, permission, tId) => `insert into user (id,username,password,status,text,sex,permission,tId) values (${id},'${username}', '${password}', 'online', '没有个签就是最好的个签','${sex}','${permission}', '${tId}')`,
 
   'changeStatus': (id) => `update user set status='online' where id=${id}`,
@@ -21,16 +21,16 @@ const sql = {
   'stuInfo': (id) => `select * from stuInfo where id='${id}'`,
   
   'chat': {
-    'contact': (id) => `SELECT \`user\`.id,\`user\`.\`status\`,\`user\`.username,\`user\`.text,zid${id}.fclass from user,zid${id} WHERE \`user\`.id=zid${id}.id`,
+    'contact': (id) => `SELECT \`user\`.id,\`user\`.\`status\`,\`user\`.username,\`user\`.text,\`user\`.sex,zid${id}.fclass from user,zid${id} WHERE \`user\`.id=zid${id}.id`,
     
     'insertyid1': (data) => `insert into yid${data.id} (id, toID, content, time, status) values ('${data.id}','${data.toID}','${data.content}','${formatDateTime(data.time)}', 'unread')`,
     'insertyid2': (data) => `insert into yid${data.toID} (id, toID, content, time, status) values ('${data.id}','${data.toID}','${data.content}','${formatDateTime(data.time)}', 'unread')`,
+    // select yid1002.*,`user`.sex from yid1002 LEFT JOIN user on yid1002.id=`user`.id where (yid1002.id='1002' and yid1002.toID='1002') or (yid1002.id='1002' and yid1002.toID='1002')  
+    'getyid': (id, toID) => `select yid${id}.*,user.sex from yid${id} left join user on yid${id}.id=user.id where (yid${id}.id='${id}' and yid${id}.toID='${toID}') or (yid${id}.id='${toID}' and yid${id}.toID='${id}')`,
+    'getSex': id => `select * from user where id='${id}'`,
     
-    'getyid': (id,toID) => `select * from yid${id} where (id='${id}' and toID='${toID}') or (id='${toID}' and toID='${id}')`,
-
-    
-    'getAllyid1': (id) => `SELECT \`user\`.username,user.id, yid${id}.toID,yid${id}.content,yid${id}.time,yid${id}.status from \`user\` LEFT JOIN yid${id} on \`user\`.id=yid${id}.toID where yid${id}.id = ${id}`,
-    'getAllyid2': (id) => `SELECT \`user\`.username,user.id, yid${id}.id as toID,yid${id}.content,yid${id}.time,yid${id}.status from \`user\` LEFT JOIN yid${id} on \`user\`.id=yid${id}.id where yid${id}.toID = ${id}`,
+    'getAllyid1': (id) => `SELECT user.sex,\`user\`.username,user.id, yid${id}.toID,yid${id}.content,yid${id}.time,yid${id}.status from \`user\` LEFT JOIN yid${id} on \`user\`.id=yid${id}.toID where yid${id}.id = ${id}`,
+    'getAllyid2': (id) => `SELECT user.sex,\`user\`.username,user.id, yid${id}.id as toID,yid${id}.content,yid${id}.time,yid${id}.status from \`user\` LEFT JOIN yid${id} on \`user\`.id=yid${id}.id where yid${id}.toID = ${id}`,
 
     'contact_move': data => `update zid${data.id} set fclass='${data.fclass}' where id='${data.toID}'`,
     

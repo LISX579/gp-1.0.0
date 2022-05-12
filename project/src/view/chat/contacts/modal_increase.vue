@@ -75,7 +75,8 @@ export default {
         text: JSON.parse(localStorage.getItem('userLogin')).text,
         checkInfo: this.form.checkInfo,
         opType: 'addFriend',
-        fromID: JSON.parse(localStorage.getItem('userLogin')).id
+        fromID: JSON.parse(localStorage.getItem('userLogin')).id,
+        sex: JSON.parse(localStorage.getItem('userLogin')).sex
       }
       const postData = {
         id: JSON.parse(localStorage.getItem('userLogin')).id,

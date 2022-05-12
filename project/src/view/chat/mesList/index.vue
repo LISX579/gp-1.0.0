@@ -37,7 +37,7 @@ export default {
       this.toIdMsgArr=[]
       const id = this.myData.id
       fetch.getAllMsg(id).then(res => {
-        console.log(res);
+
         const data = res.res1.data.concat(res.res2.data)
 
         data.sort((a, b)=> {

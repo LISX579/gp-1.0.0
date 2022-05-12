@@ -49,14 +49,17 @@ function chatSocket() {
       socket.emit('avgBadge', res)
     })
     socket.on('msgListInc', async (data) => {
+      const res = await getRes(sql.chat.getSex(data.id))
       const emitData = {
         toID: data.id,
-        username: data.username
+        username: data.username,
+        sex: res.data[0].sex
       }
       socket.emit('msgListInc', emitData)
     })
 
     socket.on('applyAdd', async (data) => {
+  
       await getRes(sql.chat.addAppyFriend(data))
       const res = await getRes(sql.chat.getApply(data.toID))
       socket.to(data.toID.toString()).emit('refreshApply', res)
@@ -111,7 +114,7 @@ function chatSocket() {
 
     // 公告 发布
     socket.on('newNotice', async (data) => {
-      console.log(data);
+      
       await getRes(sql.notice.newNotice(data))
       const idData = await getRes(sql.notice.getxmanage(data))
       // console.log(socket.adapter.rooms);
@@ -138,10 +141,10 @@ function chatSocket() {
 
     // 删除公告
     socket.on('notice_delete', async (data) => {
-      console.log(data);
+
       await getRes(sql.notice.delete(data))
       const idData = await getRes(sql.notice.getxmanage(data))
-      console.log(sql.notice.getxmanage(data));
+    
       
       for (let i = 0; i < idData.data.length; i++) {
         if (typeof socket.adapter.rooms.get(idData.data[i].id.toString()) == 'object') {
@@ -157,7 +160,7 @@ function chatSocket() {
     socket.on('notice_edit', async (data) => {
 
       await getRes(sql.notice.edit(data))
-      console.log(sql.notice.edit(data));
+      
 
       const idData = await getRes(sql.notice.getxmanage(data))
       for (let i = 0; i < idData.data.length; i++) {
@@ -179,7 +182,6 @@ function chatSocket() {
     socket.on('stuEdit', async (data) => {
       // flag 判断是update还是insert
       const flag = await getRes(sql.selfInfo.stuFlag(data))
-      console.log(flag);
       if (flag.data.length > 0) {
         await getRes(sql.selfInfo.updateStuEdit(data))
       } else { 

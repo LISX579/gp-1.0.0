@@ -1,13 +1,16 @@
 <template>
   <div>
     <div  v-if="align === 'right'" class="wrap">
-      <el-avatar class="avaR" icon="el-icon-user-solid"></el-avatar>
+      <el-avatar class="avaR" v-if="item.sex=='男'" size="large" :src="require('@/assets/img/boy.jpg')"></el-avatar>
+      <el-avatar class="avaR" v-if="item.sex=='女'" size="large" :src="require('@/assets/img/girl.jpg')"></el-avatar>
       <span class="chatBox-right">
         {{item.content}}
       </span>
     </div>
     <div v-if="align === 'left'" class="wrap">
-      <el-avatar  class="avaL" icon="el-icon-user-solid"></el-avatar>
+<!--      <el-avatar  class="avaL" icon="el-icon-user-solid"></el-avatar>-->
+      <el-avatar class="avaL" v-if="item.sex=='男'" size="large" :src="require('@/assets/img/boy.jpg')"></el-avatar>
+      <el-avatar class="avaL" v-if="item.sex=='女'" size="large" :src="require('@/assets/img/girl.jpg')"></el-avatar>
       <div class="chatBox-left">
         {{item.content}}
       </div>

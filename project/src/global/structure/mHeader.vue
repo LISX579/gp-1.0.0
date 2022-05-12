@@ -6,8 +6,6 @@
           <span>{{ selfData.username }}({{ selfData.id }})</span>
         </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command="modalHome">我的主页</el-dropdown-item>
-        <el-dropdown-item command="modalConfig">设置</el-dropdown-item>
         <el-dropdown-item command="modalExit">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>

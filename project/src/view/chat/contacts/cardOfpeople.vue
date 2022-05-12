@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="cardPeo contact-class" @click="contactClick" v-if="type==='contact'">
-      <el-avatar size="large" class="headImg"></el-avatar>
+      <el-avatar v-if="data.sex=='男'" size="large" class="headImg" :src="require('@/assets/img/boy.jpg')"></el-avatar>
+      <el-avatar v-if="data.sex=='女'" size="large" class="headImg" :src="require('@/assets/img/girl.jpg')"></el-avatar>
       &emsp;{{ data.username }}({{ data.id }})
       <div class="control">
         <el-dropdown trigger="click" placement="bottom-end" @command="dropClick">
@@ -21,7 +22,8 @@
     </div>
     <div v-if="type==='msgList'" class="msgClass">
       <div @click="cardClick">
-        <el-avatar size="large" class="headImg"/>
+        <el-avatar v-if="data.sex=='男'" size="large" class="headImg" :src="require('@/assets/img/boy.jpg')"></el-avatar>
+        <el-avatar v-if="data.sex=='女'" size="large" class="headImg" :src="require('@/assets/img/girl.jpg')"></el-avatar>
         <el-badge v-if="count!=0" :value="count" class="item">
           &emsp;{{ data.username }}({{ data.toID }})&nbsp;&nbsp;
         </el-badge>
@@ -150,6 +152,7 @@ export default {
     if (this.type == 'msgList') {
       this.getMsgListBadge();
     }
+    console.log('aaaaaaaaaaa',this.data);
   },
   methods: {
     getMsgListBadge() {
@@ -196,7 +199,7 @@ export default {
     modalClose() {
       this.modalName = null;
       this.dialogVisible = false;
-    },
+    }
   }
 };
 </script>

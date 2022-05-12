@@ -9,7 +9,9 @@ router.get('/:id/contact', async (ctx) => {
 })
 
 router.get('/getMsg', async (ctx) => {
+  console.log(sql.chat.getyid(ctx.query.id, ctx.query.toID));
   const res = await getRes(sql.chat.getyid(ctx.query.id, ctx.query.toID))
+  console.log(res);
   if (res.data) {
     ctx.body = res
   } else {

@@ -89,6 +89,7 @@ export default {
             this.formData.text = res.data[0].text
             this.formData.username = res.data[0].username
             this.formData.img = res.data[0].img
+            this.formData.sex = res.data[0].sex
             localStorage.setItem('userLogin', JSON.stringify(this.formData))
           } else if(res.loginCheck === 'fail') {
             this.loginError = true
@@ -116,9 +117,8 @@ export default {
 
 <style scoped>
 .con {
-  background: aqua;
   margin: 0 auto;
-  width: 302px;
+  /*width: 302px;*/
   padding: 32px 40px 28px 40px;
 }
 </style>

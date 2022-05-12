@@ -74,6 +74,7 @@ export default {
           }
         })
         this.data=_data
+        // console.log('asdasdasdas',_data);
       })
     }
   }
