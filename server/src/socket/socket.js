@@ -30,6 +30,10 @@ function chatSocket() {
     })
 
 
+    socket.on('contact_move', async (data) => { 
+      await getRes(sql.chat.contact_move(data))
+      socket.emit('contactRefresh')
+    })
 
     socket.on('badgeValue', async (data) => {
       const res = await getRes(sql.chat.getBadge(data))

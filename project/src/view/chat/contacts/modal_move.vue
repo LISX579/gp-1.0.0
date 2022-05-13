@@ -43,7 +43,7 @@ export default {
   props: {
     toID: {
       type: Number,
-      default: ''
+      default: 0
     }
   },
   methods: {
@@ -56,9 +56,10 @@ export default {
         toID: this.toID,
         fclass: this.showInput ? this.newFclass : this.fclass
       }
-      fetch.contact_move(postData).then(res => {
-        this.$bus.$emit('contact_move')
-      })
+      this.$socket.emit('contact_move', postData)
+      // fetch.contact_move(postData).then(res => {
+      //   this.$bus.$emit('contact_move')
+      // })
       this.close()
     }
   },
