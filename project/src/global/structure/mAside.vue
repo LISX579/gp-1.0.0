@@ -11,7 +11,7 @@
           class="smallImg"></div>
       <el-menu-item index="overview">
         <i class="el-icon-s-home"/>
-        <span slot="title">概览</span>
+        <span slot="title">公告</span>
       </el-menu-item>
       <el-menu-item v-if="myLoginData.permission=='user'" index="selfInfo">
         <i class="el-icon-user-solid"></i>

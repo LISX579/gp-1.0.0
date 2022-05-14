@@ -12,7 +12,6 @@
      <el-descriptions title="学生信息">
        <el-descriptions-item label="学号">{{selectItem[0].id}}</el-descriptions-item>
        <el-descriptions-item label="姓名">{{selectItem[0].name}}</el-descriptions-item>
-       <el-descriptions-item label="身份证号">{{selectItem[0].idNumber}}</el-descriptions-item>
      </el-descriptions>
    </div>
 
